@@ -166,7 +166,7 @@ export default class IndexPage extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename="/">
         <Switch>
           <Route exact path="/">
             {this.startApp()}
