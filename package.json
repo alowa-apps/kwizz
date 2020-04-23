@@ -2,7 +2,7 @@
   "name": "kwizz",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.kwizz.guru",
+  "homepage": "/",
   "dependencies": {
     "@aws-amplify/analytics": "^3.1.7",
     "@aws-amplify/api": "^3.1.7",
