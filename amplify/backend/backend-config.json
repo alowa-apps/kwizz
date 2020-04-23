@@ -1,0 +1,51 @@
+{
+	"api": {
+		"quizit3": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+							"userPoolConfig": {
+								"userPoolId": "authquizit3df1a9e52df1a9e52"
+							}
+						}
+					],
+					"defaultAuthentication": {
+						"authenticationType": "AWS_IAM"
+					}
+				}
+			}
+		}
+	},
+	"auth": {
+		"quizit3df1a9e52df1a9e52": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"hosting": {
+		"amplifyhosting": {
+			"service": "amplifyhosting",
+			"providerPlugin": "awscloudformation",
+			"type": "manual"
+		}
+	},
+	"predictions": {
+		"interpretText": {
+			"providerPlugin": "awscloudformation",
+			"service": "Comprehend",
+			"interpretType": "interpretText"
+		}
+	},
+	"function": {
+		"addData": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda"
+		}
+	}
+}

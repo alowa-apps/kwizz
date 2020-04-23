@@ -1,0 +1,53 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-quizit3-dev-161737-authRole",
+            "UnauthRoleArn": "arn:aws:iam::911562579932:role/amplify-quizit3-dev-161737-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::911562579932:role/amplify-quizit3-dev-161737-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-quizit3-dev-161737-deployment",
+            "UnauthRoleName": "amplify-quizit3-dev-161737-unauthRole",
+            "StackName": "amplify-quizit3-dev-161737",
+            "StackId": "arn:aws:cloudformation:eu-west-1:911562579932:stack/amplify-quizit3-dev-161737/6f16da00-6d19-11ea-b651-064e860779f8",
+            "AmplifyAppId": "da6bp4q94gq4t"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "da6bp4q94gq4t",
+                    "type": "manual"
+                }
+            },
+            "auth": {
+                "quizit3df1a9e52df1a9e52": {}
+            }
+        }
+    },
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-quizit3-prod-214330-authRole",
+            "UnauthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-prod-214330-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-prod-214330-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-quizit3-prod-214330-deployment",
+            "UnauthRoleName": "amplify-quizit3-prod-214330-unauthRole",
+            "StackName": "amplify-quizit3-prod-214330",
+            "StackId": "arn:aws:cloudformation:eu-west-1:331566579748:stack/amplify-quizit3-prod-214330/11e206e0-7451-11ea-afef-0a0af0d573f8",
+            "AmplifyAppId": "d1qdenhzp003kw"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d1qdenhzp003kw",
+                    "type": "manual"
+                }
+            },
+            "auth": {
+                "quizit3df1a9e52df1a9e52": {}
+            },
+            "function": {
+                "addData": {}
+            }
+        }
+    }
+}

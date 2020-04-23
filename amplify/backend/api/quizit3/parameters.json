@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "quizit3",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authquizit3df1a9e52df1a9e52",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

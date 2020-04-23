@@ -1,0 +1,72 @@
+type Quiz @model @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  title: String!
+  seconds: Int!
+  currentQuestion: String
+  questionOrder: String
+  started: Boolean
+  questionTime: Int
+  view: Int
+  owner: String!
+}
+
+type Questions @model @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  image: String
+  youtube: String
+  question: String!
+  answerOne: String
+  answerOneCorrect: Boolean
+  answerTwo: String
+  answerTwoCorrect: Boolean
+  answerThree: String
+  answerThreeCorrect: Boolean
+  answerFour: String
+  answerFourCorrect: Boolean
+  quizID: String!
+  order: Int
+  public: Boolean
+  fromLibrary: Boolean
+  category: String
+}
+type QuestionsDB @model @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  image: String
+  youtube: String
+  question: String!
+  answerOne: String
+  answerOneCorrect: Boolean
+  answerTwo: String
+  answerTwoCorrect: Boolean
+  answerThree: String
+  answerThreeCorrect: Boolean
+  answerFour: String
+  answerFourCorrect: Boolean
+  relatedQuestion: String!
+  public: Boolean
+  category: String
+  language: String
+}
+
+type Subscribers @model @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  type: String!
+  score: Int!
+  quizID: String!
+  name: String!
+}
+
+type Responses @model @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  quiz: String!
+  subscriber: String!
+  question: String!
+}
+type Languages
+  @model
+  @auth(rules: [{ allow: public, provider: iam }])
+  @key(name: "ByCode", fields: ["type", "code"], queryField: "getLangByCode") {
+  id: ID!
+  type: String!
+  code: String!
+}
