@@ -6,6 +6,10 @@
 
 We have build a serverless kwizz which is hosted on www.kwizz.guru Everyone can use this app for free to build online quizes to play with colleagues, friends and family. Our goal is to deliver fun for free.
 
+## Alowa Apps
+
+Alowa Apps is a small company who deliver (web)apps with a clear purpose, great usability and awesome technology. We focus on e-health but we don't stay away from a little sidesteps like our online quiz tool (kwizz.guru) or a starter for apps built on AWS amplify & expo. We are big believers of the open source community and try to make contributions to that where ever we can.
+
 ## Open source
 
 We would like to open source this app so everyone can contribute. It would be great to improve UX, the quality of code, add automated tests and add new features.
