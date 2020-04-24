@@ -37,6 +37,7 @@ export default class IndexPage extends React.Component {
   }
 
   componentDidMount() {
+    console.log("app started");
     this.init = DataStore.observe(Quiz).subscribe();
 
     if (localStorage.getItem("path") !== null) {
@@ -166,7 +167,7 @@ export default class IndexPage extends React.Component {
 
   render() {
     return (
-      <Router basename="/">
+      <Router>
         <Switch>
           <Route exact path="/">
             {this.startApp()}
