@@ -67,7 +67,7 @@
 				"Runtime": "nodejs12.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-quizit3-dev-161737-deployment",
+					"S3Bucket": "amplify-quizit3-test-163419-deployment",
 					"S3Key": "amplify-builds/addData-344a6d684b6939654562-build.zip"
 				}
 			}
