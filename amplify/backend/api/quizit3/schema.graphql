@@ -3,7 +3,7 @@ type Quiz
   @auth(
     rules: [
       { allow: public, provider: iam }
-      { allow: owner, operations: [create, update, delete] }
+      { allow: owner, operations: [read, create, update, delete] }
     ]
   ) {
   id: ID!
@@ -21,7 +21,7 @@ type Questions
   @model
   @auth(
     rules: [
-      { allow: owner, operations: [create, update, delete] }
+      { allow: owner, operations: [read, create, update, delete] }
       { allow: public, provider: iam }
     ]
   ) {
@@ -47,7 +47,7 @@ type QuestionsDB
   @model
   @auth(
     rules: [
-      { allow: owner, operations: [create, update, delete] }
+      { allow: owner, operations: [read, create, update, delete] }
       { allow: public, provider: iam }
     ]
   ) {
