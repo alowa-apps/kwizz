@@ -33,7 +33,7 @@ function AdminEditQuizPage({ location }) {
 
   function addQuestion(id) {
     history.push({
-      pathname: "/edit-question/",
+      pathname: "/edit-question",
       state: {
         questionId: 0,
         status: "add"
