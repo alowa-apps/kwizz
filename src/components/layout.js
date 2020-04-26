@@ -24,7 +24,7 @@ const Layout = props => {
                 <img src={Logo} width="80px" alt="Kwizz" />
               </span>
 
-              <span className="quizTitle">Kiwzz</span>
+              <span className="quizTitle">Kwizz</span>
 
               <p className="quizDescription">
                 Become thé Kwizz Guru amongst colleagues, friends and family.

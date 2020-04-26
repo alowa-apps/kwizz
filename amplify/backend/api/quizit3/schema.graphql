@@ -1,4 +1,11 @@
-type Quiz @model @auth(rules: [{ allow: public, provider: iam }]) {
+type Quiz
+  @model
+  @auth(
+    rules: [
+      { allow: public, provider: iam }
+      { allow: owner, operations: [create, update, delete] }
+    ]
+  ) {
   id: ID!
   title: String!
   seconds: Int!
@@ -10,7 +17,14 @@ type Quiz @model @auth(rules: [{ allow: public, provider: iam }]) {
   owner: String!
 }
 
-type Questions @model @auth(rules: [{ allow: public, provider: iam }]) {
+type Questions
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, update, delete] }
+      { allow: public, provider: iam }
+    ]
+  ) {
   id: ID!
   image: String
   youtube: String
@@ -29,7 +43,14 @@ type Questions @model @auth(rules: [{ allow: public, provider: iam }]) {
   fromLibrary: Boolean
   category: String
 }
-type QuestionsDB @model @auth(rules: [{ allow: public, provider: iam }]) {
+type QuestionsDB
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, update, delete] }
+      { allow: public, provider: iam }
+    ]
+  ) {
   id: ID!
   image: String
   youtube: String

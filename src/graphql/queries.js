@@ -111,6 +111,7 @@ export const syncQuestions = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -140,6 +141,7 @@ export const getQuestions = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -171,6 +173,7 @@ export const listQuestionss = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -210,6 +213,7 @@ export const syncQuestionsDbs = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -238,6 +242,7 @@ export const getQuestionsDb = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -268,6 +273,7 @@ export const listQuestionsDBs = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt

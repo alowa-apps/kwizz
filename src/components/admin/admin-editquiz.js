@@ -170,7 +170,7 @@ function AdminEditQuizPage({ location }) {
                 <Card.Link>
                   <Link
                     to={{
-                      pathname: "/edit-question/",
+                      pathname: "/edit-question",
                       state: { questionId: questions[i].id, status: "edit" }
                     }}
                   >
@@ -226,7 +226,7 @@ function AdminEditQuizPage({ location }) {
             or
             <Link
               to={{
-                pathname: "/library/"
+                pathname: "/library"
               }}
             >
               <Button variant="primary" className="addQuestionLibrary">

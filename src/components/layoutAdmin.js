@@ -12,7 +12,7 @@ import "./layout.css";
 import { Container, Jumbotron, Row, Col } from "react-bootstrap";
 import Logo from "../images/nerd.png";
 
-const Layout = ({ children, quizTitle }) => {
+const Layout = props => {
   return (
     <>
       <Container>
@@ -24,7 +24,7 @@ const Layout = ({ children, quizTitle }) => {
                 <img src={Logo} width="80px" alt="Kwizz" />
               </span>
 
-              <span className="quizTitle">Kiwzz</span>
+              <span className="quizTitle">Kwizz</span>
 
               <p className="quizDescription">
                 Become thé Kwizz Guru amongst colleagues, friends and family.
@@ -35,7 +35,7 @@ const Layout = ({ children, quizTitle }) => {
         <Row>
           <Col>
             {" "}
-            <main>{children}</main>
+            <main>{props.children}</main>
           </Col>
         </Row>
       </Container>

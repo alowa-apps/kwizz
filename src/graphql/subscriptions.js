@@ -1,213 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateQuiz = /* GraphQL */ `
-  subscription OnCreateQuiz {
-    onCreateQuiz {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateQuiz = /* GraphQL */ `
-  subscription OnUpdateQuiz {
-    onUpdateQuiz {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteQuiz = /* GraphQL */ `
-  subscription OnDeleteQuiz {
-    onDeleteQuiz {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateQuestions = /* GraphQL */ `
-  subscription OnCreateQuestions {
-    onCreateQuestions {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateQuestions = /* GraphQL */ `
-  subscription OnUpdateQuestions {
-    onUpdateQuestions {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteQuestions = /* GraphQL */ `
-  subscription OnDeleteQuestions {
-    onDeleteQuestions {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateQuestionsDb = /* GraphQL */ `
-  subscription OnCreateQuestionsDb {
-    onCreateQuestionsDB {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateQuestionsDb = /* GraphQL */ `
-  subscription OnUpdateQuestionsDb {
-    onUpdateQuestionsDB {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteQuestionsDb = /* GraphQL */ `
-  subscription OnDeleteQuestionsDb {
-    onDeleteQuestionsDB {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const onCreateSubscribers = /* GraphQL */ `
   subscription OnCreateSubscribers {
     onCreateSubscribers {
@@ -322,6 +115,219 @@ export const onDeleteLanguages = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+    }
+  }
+`;
+export const onCreateQuiz = /* GraphQL */ `
+  subscription OnCreateQuiz($owner: String!) {
+    onCreateQuiz(owner: $owner) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateQuiz = /* GraphQL */ `
+  subscription OnUpdateQuiz($owner: String!) {
+    onUpdateQuiz(owner: $owner) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteQuiz = /* GraphQL */ `
+  subscription OnDeleteQuiz($owner: String!) {
+    onDeleteQuiz(owner: $owner) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateQuestions = /* GraphQL */ `
+  subscription OnCreateQuestions($owner: String!) {
+    onCreateQuestions(owner: $owner) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateQuestions = /* GraphQL */ `
+  subscription OnUpdateQuestions($owner: String!) {
+    onUpdateQuestions(owner: $owner) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteQuestions = /* GraphQL */ `
+  subscription OnDeleteQuestions($owner: String!) {
+    onDeleteQuestions(owner: $owner) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onCreateQuestionsDb = /* GraphQL */ `
+  subscription OnCreateQuestionsDb($owner: String!) {
+    onCreateQuestionsDB(owner: $owner) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateQuestionsDb = /* GraphQL */ `
+  subscription OnUpdateQuestionsDb($owner: String!) {
+    onUpdateQuestionsDB(owner: $owner) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteQuestionsDb = /* GraphQL */ `
+  subscription OnDeleteQuestionsDb($owner: String!) {
+    onDeleteQuestionsDB(owner: $owner) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
   }
 `;
