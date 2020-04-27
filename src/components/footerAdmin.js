@@ -18,7 +18,7 @@ function Footer() {
                 href="https://github.com/alowa-apps/kwizz/issues/new/choose"
                 target="_blank"
               >
-                Having issues?
+                Having issues or idea?
               </a>
             </li>
             <li>
