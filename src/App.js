@@ -11,6 +11,7 @@ import Game from "./components/game";
 import Admin from "./components/admin/admin";
 import AdminEdit from "./components/admin/admin-editquiz";
 import AdminRun from "./components/admin/admin-runquiz";
+import AdminFAQ from "./components/admin/admin-faq";
 import AdminEditQuestion from "./components/admin/admin-editquestion";
 import AdminLibrary from "./components/admin/question-library";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -24,7 +25,8 @@ export default class IndexPage extends React.Component {
   state = {
     name: "",
     gamecode: "",
-    error: "",
+    error:
+      "The log in take a few seconds, this is a known issue where we are working on.",
     path: ""
   };
 
@@ -189,6 +191,9 @@ export default class IndexPage extends React.Component {
           </Route>
           <Route path="/library">
             <AdminLibrary />
+          </Route>
+          <Route path="/admin-faq">
+            <AdminFAQ />
           </Route>
         </Switch>
       </Router>

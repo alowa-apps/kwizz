@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button } from "react-bootstrap";
-import Layout from "../layout";
+import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Quiz, Subscribers, Questions, Responses } from "../../models/";
 import { Link } from "react-router-dom";
 import Amplify, { Hub } from "@aws-amplify/core";
-
+import Footer from "../footerAdmin";
 import awsconfig from "../../aws-exports";
 
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
@@ -132,13 +132,7 @@ function AdminPage(props) {
                     <tr key={i}>
                       <td>{quiz[i].id.substring(0, 8)}</td>
                       <td>{quiz[i].title}</td>
-                      <td>
-                        {quiz.started ? (
-                          <p>Quiz not started!</p>
-                        ) : (
-                          <p>Quiz started!</p>
-                        )}
-                      </td>
+
                       <td>
                         <Link
                           to={{
@@ -146,7 +140,7 @@ function AdminPage(props) {
                             state: { quizID: quiz[i].id }
                           }}
                         >
-                          Run Quiz
+                          Run Kwizz
                         </Link>
                       </td>
                       <td>
@@ -156,7 +150,7 @@ function AdminPage(props) {
                             state: { quizID: quiz[i].id }
                           }}
                         >
-                          Edit Quiz
+                          Edit Kwizz
                         </Link>
                       </td>
                       <td>
@@ -164,7 +158,7 @@ function AdminPage(props) {
                           variant="danger"
                           onClick={() => handleDeleteModalShow(quiz[i].id)}
                         >
-                          Delete quiz
+                          Delete Kwizz
                         </Button>
                       </td>
                     </tr>
@@ -180,25 +174,27 @@ function AdminPage(props) {
               }}
               variant="primary"
             >
-              Add Quiz
+              Add Kwizz
             </Button>
 
             <Modal show={deleteModalShow} onHide={handleDeleteModalClose}>
               <Modal.Header closeButton>
-                <Modal.Title>Delete quiz</Modal.Title>
+                <Modal.Title>Delete kwizz</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                Are you sure you want to delete this quiz?
+                Are you sure you want to delete this kwizz? All your data will
+                be destroyed!
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="danger" onClick={() => onDelete()}>
-                  Delete quiz
+                  Delete kwizz
                 </Button>
               </Modal.Footer>
             </Modal>
           </div>
         </Layout>
       </AmplifyAuthenticator>
+      <Footer />
     </div>
   );
 }

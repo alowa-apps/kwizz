@@ -12,7 +12,7 @@ import {
   Image
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Layout from "../layout";
+import Layout from "../layoutAdmin";
 import Video from "../video";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Layout from "../layout";
+import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Questions, Quiz, QuestionsDB } from "../../models/";
 import { Card, Row, Col, Button, Modal } from "react-bootstrap";

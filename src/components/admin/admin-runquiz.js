@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Layout from "../layout";
+import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Quiz, Subscribers, Questions, Responses } from "../../models/";
 import {
@@ -297,17 +297,18 @@ function AdminPage(props) {
     if (validate()) {
       setIsActive(!isActive);
       const questionOrderArray = JSON.parse(questionOrder);
+      if (questionOrderArray.length !== 0) {
+        const original = await DataStore.query(Quiz, adminGameCode);
 
-      const original = await DataStore.query(Quiz, adminGameCode);
-
-      await DataStore.save(
-        Quiz.copyOf(original, updated => {
-          updated.started = true;
-          updated.currentQuestion = questionOrderArray[0];
-          updated.view = 0;
-          updated.questionTime = parseInt(time);
-        })
-      );
+        await DataStore.save(
+          Quiz.copyOf(original, updated => {
+            updated.started = true;
+            updated.currentQuestion = questionOrderArray[0];
+            updated.view = 0;
+            updated.questionTime = parseInt(time);
+          })
+        );
+      }
     }
   }
 
@@ -352,7 +353,7 @@ function AdminPage(props) {
         <div className="App">
           <Breadcrumb>
             <Breadcrumb.Item href="/admin">Admin Home</Breadcrumb.Item>
-            <Breadcrumb.Item active>Run Quiz</Breadcrumb.Item>
+            <Breadcrumb.Item active>Run Kwizz</Breadcrumb.Item>
           </Breadcrumb>
 
           <Card className="gamersView">
@@ -429,7 +430,7 @@ function AdminPage(props) {
             <Col>
               <Card style={{ height: "100%", width: "100%" }}>
                 <Card.Body>
-                  <Card.Title>Quiz control</Card.Title>
+                  <Card.Title>Kwizz control</Card.Title>
 
                   {!quiz.started && (
                     <Form.Group controlId="timer">
@@ -459,7 +460,7 @@ function AdminPage(props) {
                         variant="outline-success"
                         className="controlStart"
                       >
-                        Start quiz
+                        Start kwizz
                       </Button>
                     ) : (
                       <Button

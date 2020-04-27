@@ -15,6 +15,33 @@
 
  }
 
+ .footer {
+   background-color: #000;
+   height: 200px;
+   color: #fff;
+   text-align: left;
+   
+
+    position: absolute;
+    bottom: 0;
+   
+    height: 200px;
+    margin: 0 auto;
+ }
+
+ #contentContainer{
+   margin-bottom: 220px
+   
+ }
+
+ .accordion .header{
+   font-weight: bold
+ }
+
+ .footer a{
+   color: #fff;
+ }
+
 .getKwizzes{
   margin-right:10px
 }
@@ -254,6 +281,7 @@ html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  
 }
 article,
 aside,
@@ -278,6 +306,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f0f0f0;
+  
 }
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;

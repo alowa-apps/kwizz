@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import Layout from "../layout";
+import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Questions, Quiz, QuestionsDB, Languages } from "../../models/";
 import {
