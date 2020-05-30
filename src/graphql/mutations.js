@@ -1,6 +1,240 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createQuiz = /* GraphQL */ `
+  mutation CreateQuiz(
+    $input: CreateQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    createQuiz(input: $input, condition: $condition) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateQuiz = /* GraphQL */ `
+  mutation UpdateQuiz(
+    $input: UpdateQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    updateQuiz(input: $input, condition: $condition) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteQuiz = /* GraphQL */ `
+  mutation DeleteQuiz(
+    $input: DeleteQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    deleteQuiz(input: $input, condition: $condition) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createQuestions = /* GraphQL */ `
+  mutation CreateQuestions(
+    $input: CreateQuestionsInput!
+    $condition: ModelQuestionsConditionInput
+  ) {
+    createQuestions(input: $input, condition: $condition) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateQuestions = /* GraphQL */ `
+  mutation UpdateQuestions(
+    $input: UpdateQuestionsInput!
+    $condition: ModelQuestionsConditionInput
+  ) {
+    updateQuestions(input: $input, condition: $condition) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteQuestions = /* GraphQL */ `
+  mutation DeleteQuestions(
+    $input: DeleteQuestionsInput!
+    $condition: ModelQuestionsConditionInput
+  ) {
+    deleteQuestions(input: $input, condition: $condition) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createQuestionsDb = /* GraphQL */ `
+  mutation CreateQuestionsDb(
+    $input: CreateQuestionsDBInput!
+    $condition: ModelQuestionsDBConditionInput
+  ) {
+    createQuestionsDB(input: $input, condition: $condition) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateQuestionsDb = /* GraphQL */ `
+  mutation UpdateQuestionsDb(
+    $input: UpdateQuestionsDBInput!
+    $condition: ModelQuestionsDBConditionInput
+  ) {
+    updateQuestionsDB(input: $input, condition: $condition) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteQuestionsDb = /* GraphQL */ `
+  mutation DeleteQuestionsDb(
+    $input: DeleteQuestionsDBInput!
+    $condition: ModelQuestionsDBConditionInput
+  ) {
+    deleteQuestionsDB(input: $input, condition: $condition) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createSubscribers = /* GraphQL */ `
   mutation CreateSubscribers(
     $input: CreateSubscribersInput!
@@ -142,246 +376,6 @@ export const deleteLanguages = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-    }
-  }
-`;
-export const createQuiz = /* GraphQL */ `
-  mutation CreateQuiz(
-    $input: CreateQuizInput!
-    $condition: ModelQuizConditionInput
-  ) {
-    createQuiz(input: $input, condition: $condition) {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateQuiz = /* GraphQL */ `
-  mutation UpdateQuiz(
-    $input: UpdateQuizInput!
-    $condition: ModelQuizConditionInput
-  ) {
-    updateQuiz(input: $input, condition: $condition) {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteQuiz = /* GraphQL */ `
-  mutation DeleteQuiz(
-    $input: DeleteQuizInput!
-    $condition: ModelQuizConditionInput
-  ) {
-    deleteQuiz(input: $input, condition: $condition) {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const createQuestions = /* GraphQL */ `
-  mutation CreateQuestions(
-    $input: CreateQuestionsInput!
-    $condition: ModelQuestionsConditionInput
-  ) {
-    createQuestions(input: $input, condition: $condition) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const updateQuestions = /* GraphQL */ `
-  mutation UpdateQuestions(
-    $input: UpdateQuestionsInput!
-    $condition: ModelQuestionsConditionInput
-  ) {
-    updateQuestions(input: $input, condition: $condition) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const deleteQuestions = /* GraphQL */ `
-  mutation DeleteQuestions(
-    $input: DeleteQuestionsInput!
-    $condition: ModelQuestionsConditionInput
-  ) {
-    deleteQuestions(input: $input, condition: $condition) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const createQuestionsDb = /* GraphQL */ `
-  mutation CreateQuestionsDb(
-    $input: CreateQuestionsDBInput!
-    $condition: ModelQuestionsDBConditionInput
-  ) {
-    createQuestionsDB(input: $input, condition: $condition) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const updateQuestionsDb = /* GraphQL */ `
-  mutation UpdateQuestionsDb(
-    $input: UpdateQuestionsDBInput!
-    $condition: ModelQuestionsDBConditionInput
-  ) {
-    updateQuestionsDB(input: $input, condition: $condition) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const deleteQuestionsDb = /* GraphQL */ `
-  mutation DeleteQuestionsDb(
-    $input: DeleteQuestionsDBInput!
-    $condition: ModelQuestionsDBConditionInput
-  ) {
-    deleteQuestionsDB(input: $input, condition: $condition) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;

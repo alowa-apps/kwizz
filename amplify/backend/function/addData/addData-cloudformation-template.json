@@ -68,7 +68,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-quizit3-test-163419-deployment",
-					"S3Key": "amplify-builds/addData-344a6d684b6939654562-build.zip"
+					"S3Key": "amplify-builds/addData-4535744b662f31686b37-build.zip"
 				}
 			}
 		},

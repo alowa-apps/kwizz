@@ -16,7 +16,7 @@ import AdminEditQuestion from "./components/admin/admin-editquestion";
 import AdminLibrary from "./components/admin/question-library";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ReactGA from "react-ga";
-ReactGA.initialize("UA-154890668-2");
+ReactGA.initialize("UA-154890668-2", { testMode: true });
 ReactGA.pageview(window.location.pathname + window.location.search);
 Amplify.configure(awsConfig);
 DataStore.configure(awsConfig);
@@ -43,7 +43,7 @@ export default class IndexPage extends React.Component {
 
   componentDidMount() {
     console.log("app started");
-    this.init = DataStore.observe(Quiz).subscribe();
+    this.init = DataStore.start();
 
     if (localStorage.getItem("path") !== null) {
       this.changePath(localStorage.getItem("path"));
@@ -68,7 +68,7 @@ export default class IndexPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.init.unsubscribe();
+    //this.init.unsubscribe();
   }
 
   handleInputChange = event => {

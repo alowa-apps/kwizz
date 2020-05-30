@@ -1,6 +1,279 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const syncQuizzes = /* GraphQL */ `
+  query SyncQuizzes(
+    $filter: ModelQuizFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncQuizzes(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        title
+        seconds
+        currentQuestion
+        questionOrder
+        started
+        questionTime
+        view
+        owner
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getQuiz = /* GraphQL */ `
+  query GetQuiz($id: ID!) {
+    getQuiz(id: $id) {
+      id
+      title
+      seconds
+      currentQuestion
+      questionOrder
+      started
+      questionTime
+      view
+      owner
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listQuizs = /* GraphQL */ `
+  query ListQuizs(
+    $filter: ModelQuizFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        seconds
+        currentQuestion
+        questionOrder
+        started
+        questionTime
+        view
+        owner
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncQuestions = /* GraphQL */ `
+  query SyncQuestions(
+    $filter: ModelQuestionsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncQuestions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        image
+        youtube
+        question
+        answerOne
+        answerOneCorrect
+        answerTwo
+        answerTwoCorrect
+        answerThree
+        answerThreeCorrect
+        answerFour
+        answerFourCorrect
+        quizID
+        order
+        public
+        fromLibrary
+        category
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getQuestions = /* GraphQL */ `
+  query GetQuestions($id: ID!) {
+    getQuestions(id: $id) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      quizID
+      order
+      public
+      fromLibrary
+      category
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listQuestionss = /* GraphQL */ `
+  query ListQuestionss(
+    $filter: ModelQuestionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuestionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        image
+        youtube
+        question
+        answerOne
+        answerOneCorrect
+        answerTwo
+        answerTwoCorrect
+        answerThree
+        answerThreeCorrect
+        answerFour
+        answerFourCorrect
+        quizID
+        order
+        public
+        fromLibrary
+        category
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncQuestionsDbs = /* GraphQL */ `
+  query SyncQuestionsDbs(
+    $filter: ModelQuestionsDBFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncQuestionsDBS(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        image
+        youtube
+        question
+        answerOne
+        answerOneCorrect
+        answerTwo
+        answerTwoCorrect
+        answerThree
+        answerThreeCorrect
+        answerFour
+        answerFourCorrect
+        relatedQuestion
+        public
+        category
+        language
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getQuestionsDb = /* GraphQL */ `
+  query GetQuestionsDb($id: ID!) {
+    getQuestionsDB(id: $id) {
+      id
+      image
+      youtube
+      question
+      answerOne
+      answerOneCorrect
+      answerTwo
+      answerTwoCorrect
+      answerThree
+      answerThreeCorrect
+      answerFour
+      answerFourCorrect
+      relatedQuestion
+      public
+      category
+      language
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listQuestionsDBs = /* GraphQL */ `
+  query ListQuestionsDBs(
+    $filter: ModelQuestionsDBFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuestionsDBs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        image
+        youtube
+        question
+        answerOne
+        answerOneCorrect
+        answerTwo
+        answerTwoCorrect
+        answerThree
+        answerThreeCorrect
+        answerFour
+        answerFourCorrect
+        relatedQuestion
+        public
+        category
+        language
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const syncSubscribers = /* GraphQL */ `
   query SyncSubscribers(
     $filter: ModelSubscribersFilterInput
@@ -208,285 +481,6 @@ export const getLangByCode = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getQuiz = /* GraphQL */ `
-  query GetQuiz($id: ID!) {
-    getQuiz(id: $id) {
-      id
-      title
-      seconds
-      currentQuestion
-      questionOrder
-      started
-      questionTime
-      view
-      owner
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listQuizs = /* GraphQL */ `
-  query ListQuizs(
-    $filter: ModelQuizFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        title
-        seconds
-        currentQuestion
-        questionOrder
-        started
-        questionTime
-        view
-        owner
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncQuizzes = /* GraphQL */ `
-  query SyncQuizzes(
-    $filter: ModelQuizFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQuizzes(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        title
-        seconds
-        currentQuestion
-        questionOrder
-        started
-        questionTime
-        view
-        owner
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getQuestions = /* GraphQL */ `
-  query GetQuestions($id: ID!) {
-    getQuestions(id: $id) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      quizID
-      order
-      public
-      fromLibrary
-      category
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const listQuestionss = /* GraphQL */ `
-  query ListQuestionss(
-    $filter: ModelQuestionsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuestionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        image
-        youtube
-        question
-        answerOne
-        answerOneCorrect
-        answerTwo
-        answerTwoCorrect
-        answerThree
-        answerThreeCorrect
-        answerFour
-        answerFourCorrect
-        quizID
-        order
-        public
-        fromLibrary
-        category
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncQuestions = /* GraphQL */ `
-  query SyncQuestions(
-    $filter: ModelQuestionsFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQuestions(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        image
-        youtube
-        question
-        answerOne
-        answerOneCorrect
-        answerTwo
-        answerTwoCorrect
-        answerThree
-        answerThreeCorrect
-        answerFour
-        answerFourCorrect
-        quizID
-        order
-        public
-        fromLibrary
-        category
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getQuestionsDb = /* GraphQL */ `
-  query GetQuestionsDb($id: ID!) {
-    getQuestionsDB(id: $id) {
-      id
-      image
-      youtube
-      question
-      answerOne
-      answerOneCorrect
-      answerTwo
-      answerTwoCorrect
-      answerThree
-      answerThreeCorrect
-      answerFour
-      answerFourCorrect
-      relatedQuestion
-      public
-      category
-      language
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const listQuestionsDBs = /* GraphQL */ `
-  query ListQuestionsDBs(
-    $filter: ModelQuestionsDBFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuestionsDBs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        image
-        youtube
-        question
-        answerOne
-        answerOneCorrect
-        answerTwo
-        answerTwoCorrect
-        answerThree
-        answerThreeCorrect
-        answerFour
-        answerFourCorrect
-        relatedQuestion
-        public
-        category
-        language
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncQuestionsDbs = /* GraphQL */ `
-  query SyncQuestionsDbs(
-    $filter: ModelQuestionsDBFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQuestionsDBS(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        image
-        youtube
-        question
-        answerOne
-        answerOneCorrect
-        answerTwo
-        answerTwoCorrect
-        answerThree
-        answerThreeCorrect
-        answerFour
-        answerFourCorrect
-        relatedQuestion
-        public
-        category
-        language
-        _version
-        _deleted
-        _lastChangedAt
-        owner
       }
       nextToken
       startedAt
