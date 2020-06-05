@@ -19,6 +19,8 @@ export const createQuiz = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -40,6 +42,8 @@ export const updateQuiz = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -61,6 +65,8 @@ export const deleteQuiz = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -90,6 +96,8 @@ export const createQuestions = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -119,6 +127,8 @@ export const updateQuestions = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -148,6 +158,8 @@ export const deleteQuestions = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -176,6 +188,8 @@ export const createQuestionsDb = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -204,6 +218,8 @@ export const updateQuestionsDb = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -232,6 +248,8 @@ export const deleteQuestionsDb = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -249,6 +267,8 @@ export const createSubscribers = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -266,6 +286,8 @@ export const updateSubscribers = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -283,6 +305,8 @@ export const deleteSubscribers = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -299,6 +323,8 @@ export const createResponses = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -315,6 +341,8 @@ export const updateResponses = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -331,6 +359,8 @@ export const deleteResponses = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -346,6 +376,8 @@ export const createLanguages = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -361,6 +393,8 @@ export const updateLanguages = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -376,6 +410,8 @@ export const deleteLanguages = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;

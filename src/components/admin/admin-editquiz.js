@@ -4,7 +4,7 @@ import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Questions, Quiz, QuestionsDB } from "../../models/";
 import { Card, Row, Col, Button, Modal } from "react-bootstrap";
-
+import Storage from "@aws-amplify/storage";
 import arrayMove from "array-move";
 
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
@@ -94,6 +94,9 @@ function AdminEditQuizPage({ location }) {
 
     const todelete = await DataStore.query(Questions, selectedID);
 
+    if (todelete.image !== "" || typeof todelete.image !== "undefined") {
+      Storage.remove(todelete.image); // remove from 3s bucket
+    }
     DataStore.delete(todelete);
 
     const todeleteDB = await DataStore.query(QuestionsDB, c =>

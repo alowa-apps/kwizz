@@ -7,6 +7,7 @@ import Video from "../components/video";
 import Failure from "../images/failure.gif";
 import Right from "../images/right.gif";
 import Winner from "../images/winner.gif";
+import { S3Image } from "aws-amplify-react";
 
 export default class QuestionApp extends React.Component {
   constructor(props) {
@@ -157,6 +158,12 @@ export default class QuestionApp extends React.Component {
       disabled = true;
     }
 
+    const image = question.image;
+    let imageSlice = "";
+    if (image !== null && typeof image !== "undefined") {
+      imageSlice = image.slice(0, 4);
+    }
+
     return (
       <div>
         <span className="question">{question.question}</span>
@@ -170,7 +177,16 @@ export default class QuestionApp extends React.Component {
         )}
         {question.image !== null && (
           <div className="imageQuestionDiv">
-            <Image src={question.image} className="imageQuestion" fluid />
+            {imageSlice !== "http" ? (
+              <S3Image
+                imgKey={image}
+                theme={{
+                  photoImg: { width: "400px" }
+                }}
+              />
+            ) : (
+              <Image src={question.image} className="imageQuestion" fluid />
+            )}
           </div>
         )}
         <div className="answer">

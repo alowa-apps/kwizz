@@ -27,6 +27,8 @@ export const syncQuizzes = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -48,6 +50,8 @@ export const getQuiz = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -71,6 +75,8 @@ export const listQuizs = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -111,6 +117,8 @@ export const syncQuestions = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -140,6 +148,8 @@ export const getQuestions = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -171,6 +181,8 @@ export const listQuestionss = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -210,6 +222,8 @@ export const syncQuestionsDbs = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -238,6 +252,8 @@ export const getQuestionsDb = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -268,6 +284,8 @@ export const listQuestionsDBs = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -296,6 +314,8 @@ export const syncSubscribers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -313,6 +333,8 @@ export const getSubscribers = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -332,6 +354,8 @@ export const listSubscriberss = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -359,6 +383,8 @@ export const syncResponses = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -375,6 +401,8 @@ export const getResponses = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -393,6 +421,8 @@ export const listResponsess = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -419,6 +449,8 @@ export const syncLanguages = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -434,6 +466,8 @@ export const getLanguages = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -451,6 +485,8 @@ export const listLanguagess = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt
@@ -481,6 +517,8 @@ export const getLangByCode = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       nextToken
       startedAt

@@ -46,6 +46,28 @@
 			"build": true,
 			"providerPlugin": "awscloudformation",
 			"service": "Lambda"
+		},
+		"S3Trigger739d230f": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
+		}
+	},
+	"storage": {
+		"questionImages": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "S3Trigger739d230f",
+					"attributes": [
+						"Name",
+						"Arn",
+						"LambdaExecutionRole"
+					]
+				}
+			]
 		}
 	}
 }

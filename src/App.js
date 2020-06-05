@@ -25,8 +25,7 @@ export default class IndexPage extends React.Component {
   state = {
     name: "",
     gamecode: "",
-    error:
-      "The log in take a few seconds, this is a known issue where we are working on.",
+    error: "",
     path: ""
   };
 
@@ -65,10 +64,6 @@ export default class IndexPage extends React.Component {
     localStorage.setItem("path", "");
     localStorage.setItem("gamecode", "");
     localStorage.setItem("subscriber", "");
-  }
-
-  componentWillUnmount() {
-    //this.init.unsubscribe();
   }
 
   handleInputChange = event => {

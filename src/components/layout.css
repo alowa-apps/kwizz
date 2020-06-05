@@ -14,7 +14,7 @@
    width:100px;
 
  }
-
+ .clear { clear: both; height: 210px; }
  .footer {
    background-color: #000;
    height: 200px;
@@ -29,6 +29,19 @@
     margin: 0 auto;
  }
 
+ .deleteImage{
+   margin-top: 3px;
+ }
+.previewImage{
+  width: 100px;
+}
+.libraryQuestion{
+  font-style: italic;
+}
+
+ input#file-upload-button{
+   background-color:red
+ }
  #contentContainer{
    margin-bottom: 220px
    
@@ -59,6 +72,11 @@
   margin-top: 50px;
   font-size: 22px;
   font-weight: 800;
+}
+
+.uploaded {
+  color: #28a745;
+  font-size: 16px;
 }
 
 .preview {
@@ -232,6 +250,7 @@
 .imageQuestionDiv {
   text-align: center;
   width: 100%;
+  margin-bottom: 20px;
 }
 .imageQuestion {
   margin-bottom: 20px;

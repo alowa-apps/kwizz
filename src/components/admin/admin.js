@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Amplify, { Hub } from "@aws-amplify/core";
 import Footer from "../footerAdmin";
 import awsconfig from "../../aws-exports";
+import Storage from "@aws-amplify/storage";
 
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 
@@ -44,30 +45,23 @@ function AdminPage(props) {
   }
 
   async function onDelete() {
-    const todelete = await DataStore.query(Quiz, toBeDeletedId);
-    DataStore.delete(todelete);
-
-    const deletedSubsribers = await DataStore.query(Subscribers, c =>
-      c.quizID("eq", toBeDeletedId)
-    );
-    if (deletedSubsribers.length > 0) {
-      DataStore.delete(deletedSubsribers);
-    }
+    DataStore.delete(Quiz, c => c.id("eq", toBeDeletedId));
+    DataStore.delete(Subscribers, c => c.quizID("eq", toBeDeletedId));
+    DataStore.delete(Responses, c => c.quiz("eq", toBeDeletedId));
 
     const deletedQuestions = await DataStore.query(Questions, c =>
       c.quizID("eq", toBeDeletedId)
     );
 
     if (deletedQuestions.length > 0) {
-      DataStore.delete(deletedQuestions[0]);
+      deletedQuestions.map(item => {
+        if (item.image !== "" || typeof item.image !== "undefined") {
+          Storage.remove(item.image); // remove from 3s bucket
+        }
+      });
     }
 
-    const deletedResponses = await DataStore.query(Responses, c =>
-      c.quiz("eq", toBeDeletedId)
-    );
-    if (deletedResponses.length > 0) {
-      DataStore.delete(deletedResponses[0]);
-    }
+    DataStore.delete(Questions, c => c.quizID("eq", toBeDeletedId));
 
     listQuiz(setQuiz);
     handleDeleteModalClose();
@@ -183,7 +177,7 @@ function AdminPage(props) {
               </Modal.Header>
               <Modal.Body>
                 Are you sure you want to delete this kwizz? All your data will
-                be destroyed!
+                be destroyed, except from the questions in the library!
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="danger" onClick={() => onDelete()}>
@@ -194,6 +188,7 @@ function AdminPage(props) {
           </div>
         </Layout>
       </AmplifyAuthenticator>
+      <div className="clear"></div>
       <Footer />
     </div>
   );

@@ -27,7 +27,6 @@ function App(props) {
     );
 
     const quizdata = quiz[0];
-    console.log(quizdata);
     if (quizdata.view === 0) {
       setIsActive(true);
       setSeconds(quizdata.questionTime);

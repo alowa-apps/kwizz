@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../layoutAdmin";
-import { Breadcrumb, Card, Form, Image, Accordion } from "react-bootstrap";
+import { Breadcrumb, Card, Accordion } from "react-bootstrap";
 
 function FAQ() {
   return (
@@ -70,7 +70,11 @@ function FAQ() {
               <Card.Body>
                 No. We are running this service for free as long as we can
                 effort it ;) You can always contribute:{" "}
-                <a href="https://github.com/alowa-apps/kwizz" target="_blank">
+                <a
+                  href="https://github.com/alowa-apps/kwizz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   https://github.com/alowa-apps/kwizz
                 </a>
               </Card.Body>
@@ -86,6 +90,7 @@ function FAQ() {
                 <a
                   href="https://github.com/alowa-apps/kwizz/issues/new?assignees=&labels=&template=feature_request.md&title="
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   here.
                 </a>

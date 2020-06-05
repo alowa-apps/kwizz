@@ -17,6 +17,7 @@ import Video from "../video";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { S3Image } from "aws-amplify-react";
 
 class Library extends React.Component {
   constructor(props) {
@@ -287,6 +288,11 @@ class Library extends React.Component {
   }
 
   render() {
+    const image = this.state.modalData.image;
+    let imageSlice = "";
+    if (image !== null && typeof image !== "undefined") {
+      imageSlice = image.slice(0, 4);
+    }
     return (
       <AmplifyAuthenticator>
         <div className="signout">
@@ -309,9 +315,21 @@ class Library extends React.Component {
                     />
                   </div>
                 )}
-                {this.state.modalData.image !== null && (
+                {image !== null && (
                   <div className="imageQuestion">
-                    <Image src={this.state.modalData.image} fluid />
+                    <div className="imageQuestion">
+                      {//check because of Old Image in the library which were not uploaped yet with S3 but a ref to a picture on the internet
+                      imageSlice !== "http" ? (
+                        <S3Image
+                          imgKey={image}
+                          theme={{
+                            photoImg: { width: "400px" }
+                          }}
+                        />
+                      ) : (
+                        <Image src={image} fluid />
+                      )}
+                    </div>
                   </div>
                 )}
               </Modal.Body>

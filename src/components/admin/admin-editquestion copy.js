@@ -12,7 +12,8 @@ import {
   Alert,
   Dropdown,
   DropdownButton,
-  Modal
+  Modal,
+  Image
 } from "react-bootstrap";
 import Resizer from "react-image-file-resizer";
 import Video from "../video";
@@ -79,31 +80,19 @@ function AdminEditQuestionPage() {
   function validate() {
     let errors = [];
 
-    if (question.question === "" || typeof question.question === "undefined") {
+    if (question.question === "") {
       errors.push(<li>Question is empty</li>);
     }
-    if (
-      question.answerOne === "" ||
-      typeof question.answerOne === "undefined"
-    ) {
+    if (question.answerOne === "") {
       errors.push(<li>Answer 1 is empty</li>);
     }
-    if (
-      question.answerTwo === "" ||
-      typeof question.answerTwo === "undefined"
-    ) {
+    if (question.answerTwo === "") {
       errors.push(<li>Answer 2 is empty</li>);
     }
-    if (
-      question.answerThree === "" ||
-      typeof question.answerThree === "undefined"
-    ) {
+    if (question.answerThree === "") {
       errors.push(<li>Answer 3 is empty</li>);
     }
-    if (
-      question.answerFour === "" ||
-      typeof question.answerFour === "undefined"
-    ) {
+    if (question.answerFour === "") {
       errors.push(<li>Answer 4 is empty</li>);
     }
 
@@ -228,29 +217,53 @@ function AdminEditQuestionPage() {
       );
 
       if (publicValue) {
-        await uploadImage("publicLibrary/" + file.name, file)
-          .then(async result => {
-            await DataStore.save(
-              new QuestionsDB({
-                image: result.key,
-                youtube: youtube,
-                public: publicValue,
-                category: category,
-                question: question.question,
-                answerOne: question.answerOne,
-                answerOneCorrect: question.answerOneCorrect,
-                answerTwo: question.answerTwo,
-                answerTwoCorrect: question.answerTwoCorrect,
-                answerThree: question.answerThree,
-                answerThreeCorrect: question.answerThreeCorrect,
-                answerFour: question.answerFour,
-                answerFourCorrect: question.answerFourCorrect,
-                relatedQuestion: questionSaved.id,
-                language: language
-              })
-            );
+        const key = uploadImage("publicLibrary/" + file.name);
+
+        // var fileInput = false;
+        // if (file) {
+        //   fileInput = true;
+        // }
+        // if (fileInput) {
+        //   await Resizer.imageFileResizer(
+        //     file,
+        //     600,
+        //     600,
+        //     "JPEG",
+        //     100,
+        //     0,
+        //     async uri => {
+        //       Storage.put("publicLibrary/" + file.name, uri, {
+        //         contentType: file.type
+        //       })
+        //         .then(result => {
+        //           console.log(result);
+
+        //         })
+        //         .catch(err => console.log(err));
+        //     },
+        //     "blob"
+        //   );
+        // }
+
+        await DataStore.save(
+          new QuestionsDB({
+            image: key,
+            youtube: youtube,
+            public: publicValue,
+            category: category,
+            question: question.question,
+            answerOne: question.answerOne,
+            answerOneCorrect: question.answerOneCorrect,
+            answerTwo: question.answerTwo,
+            answerTwoCorrect: question.answerTwoCorrect,
+            answerThree: question.answerThree,
+            answerThreeCorrect: question.answerThreeCorrect,
+            answerFour: question.answerFour,
+            answerFourCorrect: question.answerFourCorrect,
+            relatedQuestion: questionSaved.id,
+            language: language
           })
-          .catch(err => console.log(err));
+        );
       }
 
       const savedQuestionId = questionSaved.id;
@@ -268,38 +281,6 @@ function AdminEditQuestionPage() {
         state: {
           quizID: localStorage.getItem("adminGameCode-editquiz")
         }
-      });
-    }
-  }
-
-  async function uploadImage(path, file) {
-    console.log(path);
-    var fileInput = false;
-    if (file) {
-      fileInput = true;
-    }
-    if (fileInput) {
-      return new Promise(async function(res, rej) {
-        await Resizer.imageFileResizer(
-          file,
-          800,
-          800,
-          "JPEG",
-          90,
-          0,
-          async uri => {
-            Storage.put(path, uri, {
-              contentType: file.type
-            })
-              .then(result => {
-                console.log(result);
-                //return result;
-                res(result);
-              })
-              .catch(err => console.log(err));
-          },
-          "blob"
-        );
       });
     }
   }
@@ -372,19 +353,11 @@ function AdminEditQuestionPage() {
         c.relatedQuestion("eq", localStorage.getItem("questionId"))
       );
 
-      let key = questionImage;
       // This question exists in DB, so update question in DB
       if (questionDB.length > 0) {
-        if (questionDB.image !== image) {
-          await uploadImage("publicLibrary/" + file.name, file)
-            .then(async result => {
-              key = result.key;
-            })
-            .catch(err => console.log(err));
-        }
         await DataStore.save(
           QuestionsDB.copyOf(questionDB[0], updated => {
-            updated.image = key;
+            updated.image = questionImage;
             updated.youtube = youtube;
             updated.question = question.question;
             updated.answerOne = question.answerOne;
@@ -404,13 +377,11 @@ function AdminEditQuestionPage() {
       // Add Question to Question DB, because public has beed marked during edit phase
       if (question.public && !question.fromLibrary && questionDB.length === 0) {
         const language = await getLanguage(question.question);
-
-        //copyImage from private bucket is not support yet, made an issue for that.
-        // https://github.com/aws-amplify/amplify-js/issues/5998
+        //const language = "nl";
 
         await DataStore.save(
           new QuestionsDB({
-            image: key,
+            image: questionImage,
             youtube: youtube,
             public: question.public,
             category: category,
@@ -437,17 +408,107 @@ function AdminEditQuestionPage() {
       });
     }
   }
+  async function uploadImage(path) {
+    let fileInput = false;
+
+    console.log(file);
+    if (file) {
+      fileInput = true;
+    }
+    if (fileInput) {
+      console.log("aaap");
+
+      const promise = new Promise(async function(res, rej) {
+        // do a thing, possibly async, then…
+        await Resizer.imageFileResizer(
+          file,
+          600,
+          600,
+          "JPEG",
+          100,
+          0,
+          async uri => {
+            Storage.put(path, uri, {
+              contentType: file.type
+            })
+              .then(result => {
+                console.log(result);
+
+                res(result);
+              })
+              .catch(err => {
+                console.log(err);
+                rej(err);
+              });
+          },
+          "blob"
+        );
+      });
+
+      console.log(promise);
+      return promise;
+      // await Resizer.imageFileResizer(
+      //   file,
+      //   600,
+      //   600,
+      //   "JPEG",
+      //   100,
+      //   0,
+      //   async uri => {
+      //     Storage.put(path, uri, {
+      //       contentType: file.type
+      //     })
+      //       .then(result => {
+      //         console.log(result);
+      //         return result;
+      //       })
+      //       .catch(err => console.log(err));
+      //   },
+      //   "blob"
+      // );
+    }
+  }
 
   async function onChangeImage(e) {
-    const uploadedFile = e.target.files[0];
+    const file1 = e.target.files[0];
 
-    setFile(uploadedFile);
+    await setFile(file1);
+    console.log(file);
+    // await uploadImage(
+    //   localStorage.getItem("adminGameCode-editquiz") + "/" + file.name
+    // );
 
-    const result = await uploadImage(
-      localStorage.getItem("adminGameCode-editquiz") + "/" + uploadedFile.name,
-      uploadedFile
-    );
-    setImage(result.key);
+    //setImage(key);
+
+    // var fileInput = false;
+    // if (file) {
+    //   fileInput = true;
+    // }
+    // if (fileInput) {
+    //   await Resizer.imageFileResizer(
+    //     file,
+    //     600,
+    //     600,
+    //     "JPEG",
+    //     100,
+    //     0,
+    //     async uri => {
+    //       Storage.put(
+    //         localStorage.getItem("adminGameCode-editquiz") + "/" + file.name,
+    //         uri,
+    //         {
+    //           contentType: file.type
+    //         }
+    //       )
+    //         .then(result => {
+    //           console.log(result);
+    //           setImage(result.key);
+    //         })
+    //         .catch(err => console.log(err));
+    //     },
+    //     "blob"
+    //   );
+    // }
   }
 
   function handleChange(e) {
@@ -552,45 +613,26 @@ function AdminEditQuestionPage() {
   }
 
   async function deleteImage(key) {
-    const original = await DataStore.query(
-      Questions,
-      localStorage.getItem("questionId")
-    );
-
-    //own question
-    if (typeof original.fromLibrary === "undefined" || !original.fromLibrary) {
-      await Storage.remove(key)
-        .then(async result => {
-          if (typeof original !== "undefined") {
-            // Update current question in Quiz
-            await DataStore.save(
-              Questions.copyOf(original, updated => {
-                updated.image = "";
-              })
-            );
-          }
-
-          setImage("");
-        })
-        .catch(err => console.log(err));
-    } else {
-      // when question is from the library don't delete the image object, but just the ref in the DB
-      const original = await DataStore.query(
-        Questions,
-        localStorage.getItem("questionId")
-      );
-
-      if (typeof original !== "undefined") {
-        // Update current question in Quiz
-        await DataStore.save(
-          Questions.copyOf(original, updated => {
-            updated.image = "";
-          })
+    await Storage.remove(key)
+      .then(async result => {
+        console.log(result);
+        const original = await DataStore.query(
+          Questions,
+          localStorage.getItem("questionId")
         );
-      }
 
-      setImage("");
-    }
+        if (typeof original !== "undefined") {
+          // Update current question in Quiz
+          await DataStore.save(
+            Questions.copyOf(original, updated => {
+              updated.image = "";
+            })
+          );
+        }
+
+        setImage("");
+      })
+      .catch(err => console.log(err));
   }
 
   function handleList(e) {
@@ -706,27 +748,23 @@ function AdminEditQuestionPage() {
                       </Col>
 
                       <Col>
-                        {!question.fromLibrary ? (
+                        {!question.fromLibrary && (
                           <Form.Group controlId="public">
                             {question.public ? (
                               <Form.Check
                                 type="checkbox"
                                 checked
-                                label="Public library (question is copyable)"
+                                label="Public (Question is copyable by others)"
                                 onChange={handleChange}
                               />
                             ) : (
                               <Form.Check
                                 type="checkbox"
-                                label="Public library (question is copyable)"
+                                label="Public (Question is copyable by others)"
                                 onChange={handleChange}
                               />
                             )}
                           </Form.Group>
-                        ) : (
-                          <div class="libraryQuestion">
-                            "This question is from the library"
-                          </div>
                         )}
                       </Col>
                     </Row>

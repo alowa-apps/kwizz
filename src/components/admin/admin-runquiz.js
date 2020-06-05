@@ -14,7 +14,7 @@ import {
   Modal,
   Image
 } from "react-bootstrap";
-
+import { S3Image } from "aws-amplify-react";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import Video from "../video";
 import Score from "../score";
@@ -397,7 +397,20 @@ function AdminPage(props) {
                           )}
                           {currentQuestion.image !== null && (
                             <div className="imageQuestion">
-                              <Image src={currentQuestion.image} fluid />
+                              {currentQuestion.image.slice(0, 4) !== "http" ? (
+                                <S3Image
+                                  imgKey={currentQuestion.image}
+                                  theme={{
+                                    photoImg: { width: "400px" }
+                                  }}
+                                />
+                              ) : (
+                                <Image
+                                  src={currentQuestion.image}
+                                  className="imageQuestion"
+                                  fluid
+                                />
+                              )}
                             </div>
                           )}
                         </Col>
@@ -540,9 +553,14 @@ function AdminPage(props) {
           </Row>
           <Modal show={stopModal}>
             <Modal.Header>
-              <Modal.Title>Stop quiz</Modal.Title>
+              <Modal.Title>Stop kwizz</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are you sure you want to stop the quiz?</Modal.Body>
+            <Modal.Body>Are you sure you want to stop the kwizz?</Modal.Body>
+            <Modal.Body>
+              Please delete the kwizz when finished and not want to run it
+              again! Your data will be deleted so we can keep this kwizz free
+              for everyone.
+            </Modal.Body>
             <Modal.Footer>
               <Button variant="danger" onClick={() => onStop(true)}>
                 Yes
