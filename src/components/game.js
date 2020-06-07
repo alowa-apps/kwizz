@@ -28,8 +28,11 @@ function App(props) {
 
     const quizdata = quiz[0];
     if (quizdata.view === 0) {
-      setIsActive(true);
       setSeconds(quizdata.questionTime);
+      setIsActive(true);
+    } else {
+      setSeconds(0);
+      setIsActive(false);
     }
     setQuiz(quizdata);
   }
@@ -45,13 +48,13 @@ function App(props) {
   useEffect(() => {
     listQuiz();
     listSubscribers();
+
     const gameQuiz = DataStore.observe(
       Quiz,
       localStorage.getItem("gamecode")
     ).subscribe(() => {
       listQuiz();
     });
-
     const subscription = DataStore.observe(Subscribers).subscribe(() => {
       listSubscribers();
     });
@@ -59,12 +62,10 @@ function App(props) {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        if (seconds === 1) {
-          clearInterval(interval);
-        } else {
-          setSeconds(seconds => seconds - 1);
-        }
+        setSeconds(seconds => seconds - 1);
       }, 1000);
+    } else if (!isActive) {
+      clearInterval(interval);
     }
 
     return () => {
@@ -82,7 +83,7 @@ function App(props) {
           <header className="App-header">
             {quiz.started && quiz.view === 0 && (
               <div className="quizTimer">
-                <span className="total">{seconds}</span>
+                <span className="total">{seconds > 0 ? seconds : 0}</span>
                 <span> seconds</span>
               </div>
             )}

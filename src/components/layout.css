@@ -9,7 +9,9 @@
  .signin{
   text-align:center;
  }
-
+ .editQuestion{
+   margin-right: 15px;
+ }
  .signout{
    width:100px;
 

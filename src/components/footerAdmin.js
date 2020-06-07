@@ -4,10 +4,12 @@ import { Navbar } from "react-bootstrap";
 function Footer() {
   return (
     <Navbar fixed="bottom" className="footer">
-      <div class="container">
-        <div class="footer-widget">
-          <div class="footer-widget-heading">
-            <h3>Kwizz.guru</h3>
+      <div className="container">
+        <div className="footer-widget">
+          <div className="footer-widget-heading">
+            <h3>
+              <a href="/">Kwizz.guru</a>
+            </h3>
           </div>
           <ul>
             <li>

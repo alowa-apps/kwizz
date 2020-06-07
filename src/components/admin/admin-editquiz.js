@@ -3,21 +3,25 @@ import React, { useEffect, useState } from "react";
 import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Questions, Quiz, QuestionsDB } from "../../models/";
-import { Card, Row, Col, Button, Modal } from "react-bootstrap";
+import { Row, Col, Button, Modal } from "react-bootstrap";
 import Storage from "@aws-amplify/storage";
 import arrayMove from "array-move";
-
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import update from "immutability-helper";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Link, useHistory } from "react-router-dom";
-
+import { Card } from "./card";
 function AdminEditQuizPage({ location }) {
   let history = useHistory();
-  const {
-    location: {
-      state: { quizID }
-    }
-  } = useHistory();
-  localStorage.setItem("adminGameCode-editquiz", quizID);
+
+  console.log(history.location.state);
+
+  if (typeof history.location.state !== "undefined") {
+    const quizID = history.location.state.quizID;
+    localStorage.setItem("adminGameCode-editquiz", quizID);
+  }
+
   const adminGameCode = localStorage.getItem("admingamecode");
   const [questions, setQuestions] = useState([]);
   const [questionOrder, setQuestionOrder] = useState([]);
@@ -159,6 +163,52 @@ function AdminEditQuizPage({ location }) {
     return <div> There are no question </div>;
   }
 
+  async function moveCard(dragIndex, hoverIndex) {
+    console.log(dragIndex, hoverIndex);
+
+    var toBeChangedArray = [];
+    toBeChangedArray = questionOrder;
+
+    arrayMove.mutate(toBeChangedArray, dragIndex, hoverIndex);
+
+    console.log(toBeChangedArray);
+    const original = await DataStore.query(Quiz, adminGameCode);
+
+    await DataStore.save(
+      Quiz.copyOf(original, updated => {
+        updated.questionOrder = JSON.stringify(toBeChangedArray);
+      })
+    );
+    listQuestions(setQuestions);
+    // const dragCard = questions[dragIndex];
+    // setQuestions(
+    //   update(questions, {
+    //     $splice: [
+    //       [dragIndex, 1],
+    //       [hoverIndex, 0, dragCard]
+    //     ]
+    //   })
+    // );
+  }
+
+  async function moveUp1(currentArrayPosition) {
+    let toBeArrayPosition = currentArrayPosition - 1;
+
+    var toBeChangedArray = [];
+    toBeChangedArray = questionOrder;
+
+    arrayMove.mutate(toBeChangedArray, currentArrayPosition, toBeArrayPosition);
+
+    const original = await DataStore.query(Quiz, adminGameCode);
+
+    await DataStore.save(
+      Quiz.copyOf(original, updated => {
+        updated.questionOrder = JSON.stringify(toBeChangedArray);
+      })
+    );
+    listQuestions(setQuestions);
+  }
+
   const questionLength = questions.length - 1;
 
   function ShowQuestions() {
@@ -166,7 +216,25 @@ function AdminEditQuizPage({ location }) {
       return (
         <Row key={i} className="editRow">
           <Col>
-            <Card>
+            <Card
+              key={item.id}
+              index={i}
+              id={item.id}
+              moveCard={moveCard}
+              title={questions[i].question}
+              editQuestion={{
+                pathname: "/edit-question",
+                state: { questionId: questions[i].id, status: "edit" }
+              }}
+              deleteQuestion={() => handleDeleteModalShow(questions[i].id)}
+            />
+          </Col>
+        </Row>
+      );
+    });
+  }
+
+  /*
               <Card.Body>
                 <Card.Title>{questions[i].question}</Card.Title>
 
@@ -195,72 +263,71 @@ function AdminEditQuizPage({ location }) {
                 )}
               </Card.Body>
             </Card>
-          </Col>
-        </Row>
-      );
-    });
-  }
+            */
 
   return (
-    <AmplifyAuthenticator>
-      <div className="signout">
-        {" "}
-        <AmplifySignOut />
-      </div>
-      <Layout>
-        <div className="App">
-          <Link to="/admin">
-            <Button className="backButton" variant="secondary">
-              Back
-            </Button>
-          </Link>
-          <br />
-          <p>{questions.length} Questions</p>
-          <div className="addEditButtons">
-            <Button
-              onClick={() => {
-                addQuestion();
-              }}
-              variant="primary"
-              className="addQuestion"
-            >
-              Add Question
-            </Button>
-            or
-            <Link
-              to={{
-                pathname: "/library"
-              }}
-            >
-              <Button variant="primary" className="addQuestionLibrary">
-                Find in library
+    <DndProvider backend={HTML5Backend}>
+      <AmplifyAuthenticator>
+        <div className="signout">
+          {" "}
+          <AmplifySignOut />
+        </div>
+
+        <Layout>
+          <div className="App">
+            <Link to="/admin">
+              <Button className="backButton" variant="secondary">
+                Back
               </Button>
             </Link>
+            <br />
+            <p>{questions.length} Questions</p>
+            <div className="addEditButtons">
+              <Button
+                onClick={() => {
+                  addQuestion();
+                }}
+                variant="primary"
+                className="addQuestion"
+              >
+                Add Question
+              </Button>
+              or
+              <Link
+                to={{
+                  pathname: "/library"
+                }}
+              >
+                <Button variant="primary" className="addQuestionLibrary">
+                  Find in library
+                </Button>
+              </Link>
+            </div>
+            {typeof questions === "undefined" ||
+            questions.length === 0 ||
+            typeof questions[0] === "undefined" ? (
+              <NoQuestions />
+            ) : (
+              <ShowQuestions />
+            )}
+            <br />
           </div>
-          {typeof questions === "undefined" ||
-          questions.length === 0 ||
-          typeof questions[0] === "undefined" ? (
-            <NoQuestions />
-          ) : (
-            <ShowQuestions />
-          )}
-          <br />
-        </div>
-        <Modal show={deleteModalShow} onHide={handleDeleteModalClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Delete question</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete this question?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={() => onDelete()}>
-              Delete quiz
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Layout>
-    </AmplifyAuthenticator>
+          <Modal show={deleteModalShow} onHide={handleDeleteModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Delete question</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this question?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="danger" onClick={() => onDelete()}>
+                Delete quiz
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </Layout>
+      </AmplifyAuthenticator>
+    </DndProvider>
   );
 }
 

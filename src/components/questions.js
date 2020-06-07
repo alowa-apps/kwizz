@@ -109,7 +109,6 @@ export default class QuestionApp extends React.Component {
     let score = 0;
     if (status) {
       const maxScore = this.state.quiz.questionTime;
-      console.log(this.state.quiz.questionTime, this.state.timer);
       score = maxScore - Math.round((Date.now() - this.state.timer) / 1000);
       this.setState({ answerState: true });
     } else {

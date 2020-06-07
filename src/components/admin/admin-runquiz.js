@@ -135,8 +135,6 @@ function AdminPage(props) {
       return b.score - a.score;
     });
 
-    console.log(subscriberList);
-
     setToplist(subscriberList);
   }
 
@@ -343,6 +341,26 @@ function AdminPage(props) {
     );
   }
 
+  function showImage(image) {
+    let imageSlice = "";
+    if (image !== null && typeof image !== "undefined") {
+      imageSlice = image.slice(0, 4);
+    }
+
+    if (imageSlice !== "http") {
+      return (
+        <S3Image
+          imgKey={image}
+          theme={{
+            photoImg: { width: "400px" }
+          }}
+        />
+      );
+    }
+
+    return <Image src={image} className="imageQuestion" fluid />;
+  }
+
   return (
     <AmplifyAuthenticator>
       <div className="signout">
@@ -397,20 +415,7 @@ function AdminPage(props) {
                           )}
                           {currentQuestion.image !== null && (
                             <div className="imageQuestion">
-                              {currentQuestion.image.slice(0, 4) !== "http" ? (
-                                <S3Image
-                                  imgKey={currentQuestion.image}
-                                  theme={{
-                                    photoImg: { width: "400px" }
-                                  }}
-                                />
-                              ) : (
-                                <Image
-                                  src={currentQuestion.image}
-                                  className="imageQuestion"
-                                  fluid
-                                />
-                              )}
+                              {showImage(currentQuestion.image)}
                             </div>
                           )}
                         </Col>
