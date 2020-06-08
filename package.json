@@ -22,6 +22,7 @@
     "aws-amplify": "^3.0.13",
     "aws-amplify-react": "^4.1.12",
     "bootstrap": "^4.4.1",
+    "depcheck": "^0.9.2",
     "history": "^4.10.1",
     "immutability-helper": "^3.1.1",
     "react": "^16.13.1",

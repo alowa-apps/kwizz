@@ -113,8 +113,8 @@ function AdminPage(props) {
               <thead>
                 <tr>
                   <td>Game code</td>
-                  <td>Title</td>
-                  <td>Started?</td>
+
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -125,7 +125,6 @@ function AdminPage(props) {
                   return (
                     <tr key={i}>
                       <td>{quiz[i].id.substring(0, 8)}</td>
-                      <td>{quiz[i].title}</td>
 
                       <td>
                         <Link

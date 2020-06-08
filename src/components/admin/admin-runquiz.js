@@ -342,6 +342,7 @@ function AdminPage(props) {
   }
 
   function showImage(image) {
+    console.log(image);
     let imageSlice = "";
     if (image !== null && typeof image !== "undefined") {
       imageSlice = image.slice(0, 4);
@@ -352,7 +353,7 @@ function AdminPage(props) {
         <S3Image
           imgKey={image}
           theme={{
-            photoImg: { width: "400px" }
+            photoImg: { maxWidth: "250px", maxHeight: "250px" }
           }}
         />
       );
@@ -413,7 +414,8 @@ function AdminPage(props) {
                               />
                             </div>
                           )}
-                          {currentQuestion.image !== null && (
+                          {(currentQuestion.image !== null ||
+                            currentQuestion.image !== "") && (
                             <div className="imageQuestion">
                               {showImage(currentQuestion.image)}
                             </div>

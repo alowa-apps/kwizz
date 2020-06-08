@@ -174,13 +174,13 @@ export default class QuestionApp extends React.Component {
             <Video videoSrcURL={question.youtube} videoTitle="" />
           </div>
         )}
-        {question.image !== null && (
+        {(question.image !== null || question.image !== "") && (
           <div className="imageQuestionDiv">
             {imageSlice !== "http" ? (
               <S3Image
                 imgKey={image}
                 theme={{
-                  photoImg: { width: "400px" }
+                  photoImg: { maxWidth: "400px", maxHeight: "400px" }
                 }}
               />
             ) : (

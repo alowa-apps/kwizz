@@ -8,6 +8,7 @@ import Storage from "@aws-amplify/storage";
 import arrayMove from "array-move";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+
 import update from "immutability-helper";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Link, useHistory } from "react-router-dom";
@@ -21,8 +22,9 @@ function AdminEditQuizPage({ location }) {
     const quizID = history.location.state.quizID;
     localStorage.setItem("adminGameCode-editquiz", quizID);
   }
+  console.log(localStorage.getItem("adminGameCode-editquiz"));
 
-  const adminGameCode = localStorage.getItem("admingamecode");
+  const adminGameCode = localStorage.getItem("adminGameCode-editquiz");
   const [questions, setQuestions] = useState([]);
   const [questionOrder, setQuestionOrder] = useState([]);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
@@ -173,7 +175,7 @@ function AdminEditQuizPage({ location }) {
 
     console.log(toBeChangedArray);
     const original = await DataStore.query(Quiz, adminGameCode);
-
+    console.log(adminGameCode, original);
     await DataStore.save(
       Quiz.copyOf(original, updated => {
         updated.questionOrder = JSON.stringify(toBeChangedArray);
@@ -200,6 +202,7 @@ function AdminEditQuizPage({ location }) {
     arrayMove.mutate(toBeChangedArray, currentArrayPosition, toBeArrayPosition);
 
     const original = await DataStore.query(Quiz, adminGameCode);
+    console.log(adminGameCode, original);
 
     await DataStore.save(
       Quiz.copyOf(original, updated => {

@@ -74,6 +74,7 @@
   margin-top: 50px;
   font-size: 22px;
   font-weight: 800;
+  width: 60%;
 }
 
 .uploaded {
@@ -327,7 +328,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f0f0f0;
-  
+
 }
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
