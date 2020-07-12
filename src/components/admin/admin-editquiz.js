@@ -8,21 +8,16 @@ import Storage from "@aws-amplify/storage";
 import arrayMove from "array-move";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
-import update from "immutability-helper";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Link, useHistory } from "react-router-dom";
 import { Card } from "./card";
 function AdminEditQuizPage({ location }) {
   let history = useHistory();
 
-  console.log(history.location.state);
-
   if (typeof history.location.state !== "undefined") {
     const quizID = history.location.state.quizID;
     localStorage.setItem("adminGameCode-editquiz", quizID);
   }
-  console.log(localStorage.getItem("adminGameCode-editquiz"));
 
   const adminGameCode = localStorage.getItem("adminGameCode-editquiz");
   const [questions, setQuestions] = useState([]);
@@ -45,42 +40,6 @@ function AdminEditQuizPage({ location }) {
         status: "add"
       }
     });
-  }
-
-  async function moveUp(currentArrayPosition) {
-    let toBeArrayPosition = currentArrayPosition - 1;
-
-    var toBeChangedArray = [];
-    toBeChangedArray = questionOrder;
-
-    arrayMove.mutate(toBeChangedArray, currentArrayPosition, toBeArrayPosition);
-
-    const original = await DataStore.query(Quiz, adminGameCode);
-
-    await DataStore.save(
-      Quiz.copyOf(original, updated => {
-        updated.questionOrder = JSON.stringify(toBeChangedArray);
-      })
-    );
-    listQuestions(setQuestions);
-  }
-
-  async function moveDown(currentArrayPosition) {
-    let toBeArrayPosition = currentArrayPosition + 1;
-
-    var toBeChangedArray = [];
-    toBeChangedArray = questionOrder;
-
-    arrayMove.mutate(toBeChangedArray, currentArrayPosition, toBeArrayPosition);
-
-    const original = await DataStore.query(Quiz, adminGameCode);
-
-    await DataStore.save(
-      Quiz.copyOf(original, updated => {
-        updated.questionOrder = JSON.stringify(toBeChangedArray);
-      })
-    );
-    listQuestions(setQuestions);
   }
 
   async function onDelete() {
@@ -166,44 +125,12 @@ function AdminEditQuizPage({ location }) {
   }
 
   async function moveCard(dragIndex, hoverIndex) {
-    console.log(dragIndex, hoverIndex);
-
     var toBeChangedArray = [];
     toBeChangedArray = questionOrder;
 
     arrayMove.mutate(toBeChangedArray, dragIndex, hoverIndex);
 
-    console.log(toBeChangedArray);
     const original = await DataStore.query(Quiz, adminGameCode);
-    console.log(adminGameCode, original);
-    await DataStore.save(
-      Quiz.copyOf(original, updated => {
-        updated.questionOrder = JSON.stringify(toBeChangedArray);
-      })
-    );
-    listQuestions(setQuestions);
-    // const dragCard = questions[dragIndex];
-    // setQuestions(
-    //   update(questions, {
-    //     $splice: [
-    //       [dragIndex, 1],
-    //       [hoverIndex, 0, dragCard]
-    //     ]
-    //   })
-    // );
-  }
-
-  async function moveUp1(currentArrayPosition) {
-    let toBeArrayPosition = currentArrayPosition - 1;
-
-    var toBeChangedArray = [];
-    toBeChangedArray = questionOrder;
-
-    arrayMove.mutate(toBeChangedArray, currentArrayPosition, toBeArrayPosition);
-
-    const original = await DataStore.query(Quiz, adminGameCode);
-    console.log(adminGameCode, original);
-
     await DataStore.save(
       Quiz.copyOf(original, updated => {
         updated.questionOrder = JSON.stringify(toBeChangedArray);
@@ -211,8 +138,6 @@ function AdminEditQuizPage({ location }) {
     );
     listQuestions(setQuestions);
   }
-
-  const questionLength = questions.length - 1;
 
   function ShowQuestions() {
     return questions.map((item, i) => {
@@ -236,37 +161,6 @@ function AdminEditQuizPage({ location }) {
       );
     });
   }
-
-  /*
-              <Card.Body>
-                <Card.Title>{questions[i].question}</Card.Title>
-
-                <Card.Link>
-                  <Link
-                    to={{
-                      pathname: "/edit-question",
-                      state: { questionId: questions[i].id, status: "edit" }
-                    }}
-                  >
-                    Edit Question
-                  </Link>
-                </Card.Link>
-                <Card.Link
-                  onClick={() => handleDeleteModalShow(questions[i].id)}
-                >
-                  Delete Question
-                </Card.Link>
-
-                {i < questionLength && (
-                  <Card.Link onClick={() => moveDown(i)}>Move Down</Card.Link>
-                )}
-
-                {i > 0 && (
-                  <Card.Link onClick={() => moveUp(i)}>Move up</Card.Link>
-                )}
-              </Card.Body>
-            </Card>
-            */
 
   return (
     <DndProvider backend={HTML5Backend}>

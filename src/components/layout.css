@@ -246,9 +246,18 @@
 }
 .videoQuestion {
   text-align: center;
-  height: 180px;
+  height: 250px;
   margin-bottom: 20px;
   width: 100%;
+}
+
+.video{
+  height: 200px;
+}
+
+iframe{
+  height: 250px;
+  width: 100%
 }
 .imageQuestionDiv {
   text-align: center;
@@ -256,7 +265,7 @@
   margin-bottom: 20px;
 }
 .imageQuestion {
-  margin-bottom: 20px;
+  margin: 20px;
   width: 80%;
 }
 

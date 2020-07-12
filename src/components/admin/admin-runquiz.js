@@ -415,7 +415,8 @@ function AdminPage(props) {
                             </div>
                           )}
                           {(currentQuestion.image !== null ||
-                            currentQuestion.image !== "") && (
+                            currentQuestion.image !== "" ||
+                            typeof currentQuestion.image !== "undefined") && (
                             <div className="imageQuestion">
                               {showImage(currentQuestion.image)}
                             </div>

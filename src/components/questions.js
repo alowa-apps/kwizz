@@ -169,25 +169,7 @@ export default class QuestionApp extends React.Component {
         {question.category !== null && (
           <div className="category">Category: {question.category}</div>
         )}
-        {question.youtube !== null && (
-          <div className="videoQuestion">
-            <Video videoSrcURL={question.youtube} videoTitle="" />
-          </div>
-        )}
-        {(question.image !== null || question.image !== "") && (
-          <div className="imageQuestionDiv">
-            {imageSlice !== "http" ? (
-              <S3Image
-                imgKey={image}
-                theme={{
-                  photoImg: { maxWidth: "400px", maxHeight: "400px" }
-                }}
-              />
-            ) : (
-              <Image src={question.image} className="imageQuestion" fluid />
-            )}
-          </div>
-        )}
+
         <div className="answer">
           <Button
             variant="primary"
@@ -228,6 +210,26 @@ export default class QuestionApp extends React.Component {
             {question.answerFour}
           </Button>
         </div>
+
+        {question.youtube !== null && (
+          <div className="videoQuestion">
+            <Video videoSrcURL={question.youtube} videoTitle="" />
+          </div>
+        )}
+        {(question.image !== null || question.image !== "") && (
+          <div className="imageQuestionDiv">
+            {imageSlice !== "http" ? (
+              <S3Image
+                imgKey={image}
+                theme={{
+                  photoImg: { maxWidth: "400px", maxHeight: "400px" }
+                }}
+              />
+            ) : (
+              <Image src={question.image} className="imageQuestion" fluid />
+            )}
+          </div>
+        )}
       </div>
     );
   }
