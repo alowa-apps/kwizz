@@ -3,17 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Layout from "../layoutAdmin";
 import { DataStore } from "@aws-amplify/datastore";
 import { Questions, Quiz, QuestionsDB, Languages } from "../../models/";
-import {
-  Card,
-  Row,
-  Col,
-  Form,
-  Button,
-  Alert,
-  Dropdown,
-  DropdownButton,
-  Modal
-} from "react-bootstrap";
+import { Card, Row, Col, Form, Button, Alert, Modal } from "react-bootstrap";
 import Resizer from "react-image-file-resizer";
 import Video from "../video";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
@@ -25,6 +15,7 @@ import Predictions, {
   AmazonAIPredictionsProvider
 } from "@aws-amplify/predictions";
 import { S3Image } from "aws-amplify-react";
+import Select from "react-select";
 Auth.configure(awsexports);
 Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
@@ -68,12 +59,12 @@ function AdminEditQuestionPage() {
 
   const [modalState, setModalState] = useState(false);
 
-  async function listQuestion(setQuestion) {
-    const question = await DataStore.query(Questions, c =>
+  async function listQuestion() {
+    const resultQuestion = await DataStore.query(Questions, c =>
       c.id("eq", localStorage.getItem("questionId"))
     );
-    setQuestion(question[0]);
-    setImage(question[0].image);
+    setQuestion(resultQuestion[0]);
+    setImage(resultQuestion[0].image);
   }
 
   function validate() {
@@ -211,6 +202,7 @@ function AdminEditQuestionPage() {
       const questionSaved = await DataStore.save(
         new Questions({
           image: questionImage,
+          imageFromS3: true,
           youtube: youtube,
           public: publicValue,
           category: category,
@@ -233,6 +225,7 @@ function AdminEditQuestionPage() {
             await DataStore.save(
               new QuestionsDB({
                 image: result.key,
+                imageFromS3: true,
                 youtube: youtube,
                 public: publicValue,
                 category: category,
@@ -411,6 +404,7 @@ function AdminEditQuestionPage() {
         await DataStore.save(
           new QuestionsDB({
             image: key,
+            imageFromS3: true,
             youtube: youtube,
             public: question.public,
             category: category,
@@ -531,34 +525,47 @@ function AdminEditQuestionPage() {
 
   function listCategories() {
     const categoriesList = [
-      "food",
-      "general",
-      "grammar",
-      "math",
-      "movies",
-      "music",
-      "pictures",
-      "showbizz",
-      "sports",
-      "tech",
-      "topography",
-      "other"
+      { value: "general", label: "general" },
+      { value: "grammar", label: "grammar" },
+      { value: "math", label: "math" },
+      { value: "movies", label: "movies" },
+      { value: "music", label: "music" },
+      { value: "pictures", label: "pictures" },
+      { value: "showbizz", label: "showbizz" },
+      { value: "sports", label: "sports" },
+      { value: "tech", label: "tech" },
+      { value: "topography", label: "topography" },
+      { value: "other", label: "other" }
     ];
 
-    const items = categoriesList.map(item => {
-      return <Dropdown.Item onClick={handleList}>{item}</Dropdown.Item>;
-    });
-    return items;
+    return (
+      <Select
+        options={categoriesList}
+        className="floor"
+        onChange={handleList}
+        defaultValue={{ value: "general", label: "general" }}
+      />
+    );
   }
 
   async function deleteImage(key) {
-    const original = await DataStore.query(
+    let original = await DataStore.query(
       Questions,
       localStorage.getItem("questionId")
     );
 
-    //own question
-    if (typeof original.fromLibrary === "undefined" || !original.fromLibrary) {
+    if (typeof original === "undefined") {
+      // question not saved yet but photo already uploaded
+      await Storage.remove(key)
+        .then(async result => {
+          console.log("imageDeleted");
+          setImage("");
+        })
+        .catch(err => console.log(err));
+    } else if (
+      typeof original.fromLibrary === "undefined" ||
+      !original.fromLibrary
+    ) {
       await Storage.remove(key)
         .then(async result => {
           if (typeof original !== "undefined") {
@@ -575,7 +582,7 @@ function AdminEditQuestionPage() {
         .catch(err => console.log(err));
     } else {
       // when question is from the library don't delete the image object, but just the ref in the DB
-      const original = await DataStore.query(
+      original = await DataStore.query(
         Questions,
         localStorage.getItem("questionId")
       );
@@ -594,13 +601,13 @@ function AdminEditQuestionPage() {
   }
 
   function handleList(e) {
-    const categoryText = e.target.innerText;
+    const categoryText = e.value;
     setQuestion({ ...question, category: categoryText });
   }
 
   useEffect(() => {
     if (localStorage.getItem("editQuestionStatus") === "edit") {
-      listQuestion(setQuestion);
+      listQuestion();
     } else {
       const initQuestion = [];
       setQuestion(initQuestion);
@@ -610,6 +617,8 @@ function AdminEditQuestionPage() {
 
     return () => {};
   }, []);
+
+  console.log(question);
   return (
     <AmplifyAuthenticator>
       <div className="signout">
@@ -632,12 +641,17 @@ function AdminEditQuestionPage() {
                 )}
               {image !== null && typeof image !== "undefined" && image !== "" && (
                 <div className="imageQuestion">
-                  <S3Image
-                    imgKey={image}
-                    theme={{
-                      photoImg: { width: "400px" }
-                    }}
-                  />
+                  {localStorage.getItem("editQuestionStatus") === "add" ||
+                  question.imageFromS3 ? (
+                    <S3Image
+                      imgKey={image}
+                      theme={{
+                        photoImg: { maxHeight: "300px" }
+                      }}
+                    />
+                  ) : (
+                    <img src={image} />
+                  )}
                 </div>
               )}
             </Modal.Body>
@@ -690,18 +704,8 @@ function AdminEditQuestionPage() {
                       <Col>
                         <Form.Group controlId="category">
                           <Form.Label>Category</Form.Label>
-                          <DropdownButton
-                            id="dropdown-basic-button"
-                            variant="warning"
-                            title={
-                              question.category === "" ||
-                              question.category === null
-                                ? "Category"
-                                : question.category
-                            }
-                          >
-                            {listCategories()}
-                          </DropdownButton>
+
+                          {listCategories()}
                         </Form.Group>
                       </Col>
 
@@ -724,7 +728,7 @@ function AdminEditQuestionPage() {
                             )}
                           </Form.Group>
                         ) : (
-                          <div class="libraryQuestion">
+                          <div className="libraryQuestion">
                             "This question is from the library"
                           </div>
                         )}
@@ -873,26 +877,33 @@ function AdminEditQuestionPage() {
                   <Col>
                     <Form.Group controlId="image">
                       <Form.Label>Image</Form.Label>
+
                       <Row>
                         {image !== null &&
                         typeof image !== "undefined" &&
                         image !== "" ? (
                           <Col>
                             <div>
-                              {" "}
-                              <S3Image
-                                imgKey={image}
-                                theme={{
-                                  photoImg: { maxHeight: "300px" }
-                                }}
-                              />{" "}
-                              <Button
-                                className="deleteImage"
-                                variant="danger"
-                                onClick={() => deleteImage(image)}
-                              >
-                                Delete Image
-                              </Button>
+                              {localStorage.getItem("editQuestionStatus") ===
+                                "add" || question.imageFromS3 ? (
+                                <div>
+                                  <S3Image
+                                    imgKey={image}
+                                    theme={{
+                                      photoImg: { maxHeight: "300px" }
+                                    }}
+                                  />
+                                  <Button
+                                    className="deleteImage"
+                                    variant="danger"
+                                    onClick={() => deleteImage(image)}
+                                  >
+                                    Delete Image
+                                  </Button>
+                                </div>
+                              ) : (
+                                <img src={image} alt="ramon" />
+                              )}
                             </div>
                           </Col>
                         ) : (

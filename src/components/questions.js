@@ -8,6 +8,7 @@ import Failure from "../images/failure.gif";
 import Right from "../images/right.gif";
 import Winner from "../images/winner.gif";
 import { S3Image } from "aws-amplify-react";
+import awsConfig from "../aws-exports";
 
 export default class QuestionApp extends React.Component {
   constructor(props) {
@@ -163,6 +164,7 @@ export default class QuestionApp extends React.Component {
       imageSlice = image.slice(0, 4);
     }
 
+    console.log(awsConfig.aws_user_files_s3_bucket);
     return (
       <div>
         <span className="question">{question.question}</span>

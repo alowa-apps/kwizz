@@ -78,6 +78,7 @@ export const createQuestions = /* GraphQL */ `
     createQuestions(input: $input, condition: $condition) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -109,6 +110,7 @@ export const updateQuestions = /* GraphQL */ `
     updateQuestions(input: $input, condition: $condition) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -140,6 +142,7 @@ export const deleteQuestions = /* GraphQL */ `
     deleteQuestions(input: $input, condition: $condition) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -171,6 +174,7 @@ export const createQuestionsDb = /* GraphQL */ `
     createQuestionsDB(input: $input, condition: $condition) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -201,6 +205,7 @@ export const updateQuestionsDb = /* GraphQL */ `
     updateQuestionsDB(input: $input, condition: $condition) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -231,6 +236,7 @@ export const deleteQuestionsDb = /* GraphQL */ `
     deleteQuestionsDB(input: $input, condition: $condition) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne

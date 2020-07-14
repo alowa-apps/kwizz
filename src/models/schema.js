@@ -104,6 +104,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "imageFromS3": {
+                    "name": "imageFromS3",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "youtube": {
                     "name": "youtube",
                     "isArray": false,
@@ -244,6 +251,13 @@ export const schema = {
                     "name": "image",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "imageFromS3": {
+                    "name": "imageFromS3",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -536,5 +550,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "83d849d345846534e3ecfb02c0557746"
+    "version": "ed0c279c01a08726da2a28cdefd11640"
 };

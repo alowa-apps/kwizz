@@ -66,6 +66,7 @@ export const onCreateQuestions = /* GraphQL */ `
     onCreateQuestions {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -94,6 +95,7 @@ export const onUpdateQuestions = /* GraphQL */ `
     onUpdateQuestions {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -122,6 +124,7 @@ export const onDeleteQuestions = /* GraphQL */ `
     onDeleteQuestions {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -150,6 +153,7 @@ export const onCreateQuestionsDb = /* GraphQL */ `
     onCreateQuestionsDB {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -177,6 +181,7 @@ export const onUpdateQuestionsDb = /* GraphQL */ `
     onUpdateQuestionsDB {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -204,6 +209,7 @@ export const onDeleteQuestionsDb = /* GraphQL */ `
     onDeleteQuestionsDB {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne

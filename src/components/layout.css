@@ -49,6 +49,12 @@
    
  }
 
+ .catBtn, .lngBtn{
+   width: 200px;
+   margin: auto;
+  margin-right: 20px;
+ }
+
  .accordion .header{
    font-weight: bold
  }

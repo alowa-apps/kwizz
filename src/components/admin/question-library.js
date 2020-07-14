@@ -18,6 +18,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { S3Image } from "aws-amplify-react";
+import Select from "react-select";
 
 class Library extends React.Component {
   constructor(props) {
@@ -236,7 +237,7 @@ class Library extends React.Component {
   }
 
   handleList(e) {
-    const categoryText = e.target.innerText;
+    const categoryText = e.value;
     localStorage.setItem("categoryFilter", categoryText);
     if (categoryText === "show all") {
       localStorage.setItem("categoryFilter", "reset");
@@ -246,7 +247,7 @@ class Library extends React.Component {
   }
 
   handleLanguage(e) {
-    const languageText = e.target.innerText;
+    const languageText = e.value;
     localStorage.setItem("languageFilter", languageText);
     if (languageText === "show all") {
       localStorage.setItem("languageFilter", "reset");
@@ -257,34 +258,45 @@ class Library extends React.Component {
   listLanguages() {
     const languages = this.state.language;
     const items = languages.map(item => {
-      return (
-        <Dropdown.Item onClick={this.handleLanguage}>{item}</Dropdown.Item>
-      );
+      return { value: item, label: item };
     });
-    return items;
+
+    return (
+      <Select
+        options={items}
+        onChange={this.handleLanguage}
+        className="lngBtn"
+        title="language"
+        defaultValue={{ value: "show all", label: "show all" }}
+      />
+    );
   }
 
   listCategories() {
     const categoriesList = [
-      "show all",
-      "food",
-      "general",
-      "grammar",
-      "math",
-      "movies",
-      "music",
-      "pictures",
-      "showbizz",
-      "sports",
-      "tech",
-      "topography",
-      "other"
+      { value: "show all", label: "show all" },
+      { value: "general", label: "general" },
+      { value: "grammar", label: "grammar" },
+      { value: "math", label: "math" },
+      { value: "movies", label: "movies" },
+      { value: "music", label: "music" },
+      { value: "pictures", label: "pictures" },
+      { value: "showbizz", label: "showbizz" },
+      { value: "sports", label: "sports" },
+      { value: "tech", label: "tech" },
+      { value: "topography", label: "topography" },
+      { value: "other", label: "other" }
     ];
 
-    const items = categoriesList.map(item => {
-      return <Dropdown.Item onClick={this.handleList}>{item}</Dropdown.Item>;
-    });
-    return items;
+    return (
+      <Select
+        options={categoriesList}
+        onChange={this.handleList}
+        defaultValue={{ value: "show all", label: "show all" }}
+        className="catBtn"
+        title="category"
+      />
+    );
   }
 
   render() {
@@ -374,24 +386,10 @@ class Library extends React.Component {
             </Link>
             <div className="backButtonLibraryDiv">
               <Form.Group controlId="category" title={this.state.category}>
-                <DropdownButton
-                  id="dropdown-basic-button"
-                  className="backButtonLibrary"
-                  variant="warning"
-                  title="category"
-                >
-                  {this.listCategories()}
-                </DropdownButton>
+                {this.listCategories()}
               </Form.Group>
               <Form.Group controlId="category">
-                <DropdownButton
-                  id="dropdown-basic-button"
-                  className="backButtonLibrary"
-                  variant="warning"
-                  title="language"
-                >
-                  {this.listLanguages()}
-                </DropdownButton>
+                {this.listLanguages()}
               </Form.Group>
             </div>
             <BootstrapTable

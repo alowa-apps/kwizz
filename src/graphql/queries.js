@@ -99,6 +99,7 @@ export const syncQuestions = /* GraphQL */ `
       items {
         id
         image
+        imageFromS3
         youtube
         question
         answerOne
@@ -130,6 +131,7 @@ export const getQuestions = /* GraphQL */ `
     getQuestions(id: $id) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -163,6 +165,7 @@ export const listQuestionss = /* GraphQL */ `
       items {
         id
         image
+        imageFromS3
         youtube
         question
         answerOne
@@ -205,6 +208,7 @@ export const syncQuestionsDbs = /* GraphQL */ `
       items {
         id
         image
+        imageFromS3
         youtube
         question
         answerOne
@@ -235,6 +239,7 @@ export const getQuestionsDb = /* GraphQL */ `
     getQuestionsDB(id: $id) {
       id
       image
+      imageFromS3
       youtube
       question
       answerOne
@@ -267,6 +272,7 @@ export const listQuestionsDBs = /* GraphQL */ `
       items {
         id
         image
+        imageFromS3
         youtube
         question
         answerOne

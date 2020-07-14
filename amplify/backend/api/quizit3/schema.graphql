@@ -13,6 +13,7 @@ type Quiz @model @auth(rules: [{ allow: public, provider: iam }]) {
 type Questions @model @auth(rules: [{ allow: public, provider: iam }]) {
   id: ID!
   image: String
+  imageFromS3: Boolean
   youtube: String
   question: String!
   answerOne: String
@@ -32,6 +33,7 @@ type Questions @model @auth(rules: [{ allow: public, provider: iam }]) {
 type QuestionsDB @model @auth(rules: [{ allow: public, provider: iam }]) {
   id: ID!
   image: String
+  imageFromS3: Boolean
   youtube: String
   question: String!
   answerOne: String

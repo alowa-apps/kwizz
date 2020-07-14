@@ -21,6 +21,7 @@ export declare class Quiz {
 export declare class Questions {
   readonly id: string;
   readonly image?: string;
+  readonly imageFromS3?: boolean;
   readonly youtube?: string;
   readonly question: string;
   readonly answerOne?: string;
@@ -43,6 +44,7 @@ export declare class Questions {
 export declare class QuestionsDB {
   readonly id: string;
   readonly image?: string;
+  readonly imageFromS3?: boolean;
   readonly youtube?: string;
   readonly question: string;
   readonly answerOne?: string;
