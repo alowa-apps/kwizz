@@ -181,6 +181,7 @@ function AdminPage(props) {
       Quiz,
       localStorage.getItem("adminGameCode-editquiz")
     ).subscribe(() => {
+      console.log("change");
       listQuiz(setQuiz, setCurrentQuestion);
     });
 
@@ -341,25 +342,20 @@ function AdminPage(props) {
     );
   }
 
-  function showImage(image) {
-    console.log(image);
-    let imageSlice = "";
-    if (image !== null && typeof image !== "undefined") {
-      imageSlice = image.slice(0, 4);
-    }
-
-    if (imageSlice !== "http") {
+  function showImage(question) {
+    console.log(question);
+    if (question.imageFromS3 && currentQuestion.image !== "") {
       return (
         <S3Image
-          imgKey={image}
+          imgKey={question.image}
           theme={{
             photoImg: { maxWidth: "250px", maxHeight: "250px" }
           }}
         />
       );
+    } else {
+      return <Image src={question.image} className="imageQuestion" fluid />;
     }
-
-    return <Image src={image} className="imageQuestion" fluid />;
   }
 
   return (
@@ -414,11 +410,12 @@ function AdminPage(props) {
                               />
                             </div>
                           )}
+
                           {(currentQuestion.image !== null ||
                             currentQuestion.image !== "" ||
                             typeof currentQuestion.image !== "undefined") && (
                             <div className="imageQuestion">
-                              {showImage(currentQuestion.image)}
+                              {showImage(currentQuestion)}
                             </div>
                           )}
                         </Col>

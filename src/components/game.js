@@ -14,19 +14,19 @@ function App(props) {
   const [isActive, setIsActive] = useState(true);
 
   async function listSubscribers() {
-    const subscribers = await DataStore.query(Subscribers, c =>
+    const result = await DataStore.query(Subscribers, c =>
       c.quizID("eq", localStorage.getItem("gamecode"))
     );
 
-    setSubscribers(subscribers);
+    setSubscribers(result);
   }
 
   async function listQuiz() {
-    const quiz = await DataStore.query(Quiz, c =>
+    const result = await DataStore.query(Quiz, c =>
       c.id("eq", localStorage.getItem("gamecode"))
     );
 
-    const quizdata = quiz[0];
+    const quizdata = result[0];
     if (quizdata.view === 0) {
       setSeconds(quizdata.questionTime);
       setIsActive(true);
@@ -53,6 +53,7 @@ function App(props) {
       Quiz,
       localStorage.getItem("gamecode")
     ).subscribe(() => {
+      console.log("quizUpdated");
       listQuiz();
     });
     const subscription = DataStore.observe(Subscribers).subscribe(() => {

@@ -94,6 +94,8 @@ function AdminEditQuizPage({ location }) {
       Quiz,
       localStorage.getItem("adminGameCode-editquiz")
     );
+
+    console.log(quiz);
     const questionOrder = JSON.parse(quiz.questionOrder);
     setQuestionOrder(questionOrder);
     let questions = [];
