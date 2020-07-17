@@ -11,7 +11,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Link, useHistory } from "react-router-dom";
 import { Card } from "./card";
-import { ConsoleLogger } from "@aws-amplify/core";
+
 function AdminEditQuizPage({ location }) {
   let history = useHistory();
 

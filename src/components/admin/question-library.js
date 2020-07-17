@@ -3,14 +3,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { QuestionsDB, Questions, Quiz } from "../../models/";
 import { API, graphqlOperation } from "@aws-amplify/api";
 import * as queries from "../../graphql/queries";
-import {
-  Form,
-  Button,
-  Dropdown,
-  DropdownButton,
-  Modal,
-  Image
-} from "react-bootstrap";
+import { Form, Button, Modal, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Layout from "../layoutAdmin";
 import Video from "../video";
