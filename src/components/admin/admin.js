@@ -69,22 +69,18 @@ function AdminPage(props) {
   }
 
   async function listQuiz(setQuiz) {
-    const user = await Auth.currentAuthenticatedUser()
-      .then(data => {
+    Auth.currentAuthenticatedUser()
+      .then(async data => {
         setUser(data.signInUserSession.idToken.payload.sub);
-        return data.signInUserSession.idToken.payload.sub;
+        const userID = data.signInUserSession.idToken.payload.sub;
+
+        const result = await DataStore.query(Quiz, c => c.owner("eq", userID));
+        setQuiz(result);
       })
       .catch(e => console.log("error: ", e));
-
-    const quiz = await DataStore.query(Quiz, c => c.owner("eq", user));
-    setQuiz(quiz);
   }
 
   useEffect(() => {
-    const init = DataStore.observe(Quiz).subscribe(Quiz => {
-      listQuiz(setQuiz);
-    });
-
     Hub.listen("auth", data => {
       const { payload } = data;
       if (payload.event === "signIn") {
@@ -94,9 +90,7 @@ function AdminPage(props) {
 
     listQuiz(setQuiz);
 
-    return () => {
-      init.unsubscribe();
-    };
+    return () => {};
   }, []);
 
   return (
