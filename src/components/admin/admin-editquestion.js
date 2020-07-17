@@ -266,7 +266,6 @@ function AdminEditQuestionPage() {
   }
 
   async function uploadImage(path, file) {
-    console.log(path);
     var fileInput = false;
     if (file) {
       fileInput = true;
@@ -285,7 +284,6 @@ function AdminEditQuestionPage() {
               contentType: file.type
             })
               .then(result => {
-                console.log(result);
                 //return result;
                 res(result);
               })
@@ -558,7 +556,6 @@ function AdminEditQuestionPage() {
       // question not saved yet but photo already uploaded
       await Storage.remove(key)
         .then(async result => {
-          console.log("imageDeleted");
           setImage("");
         })
         .catch(err => console.log(err));
@@ -618,7 +615,6 @@ function AdminEditQuestionPage() {
     return () => {};
   }, []);
 
-  console.log(question);
   return (
     <AmplifyAuthenticator>
       <div className="signout">

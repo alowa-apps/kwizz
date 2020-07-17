@@ -11,6 +11,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Link, useHistory } from "react-router-dom";
 import { Card } from "./card";
+import { ConsoleLogger } from "@aws-amplify/core";
 function AdminEditQuizPage({ location }) {
   let history = useHistory();
 
@@ -72,10 +73,15 @@ function AdminEditQuizPage({ location }) {
       DataStore.delete(todeleteDB[0]);
     }
 
+    let curQuestion = null;
+    if (order.length > 0) {
+      curQuestion = order[0];
+    }
+
     await DataStore.save(
       Questions.copyOf(quiz, updated => {
         updated.questionOrder = JSON.stringify(order);
-        updated.currrentQuestion = null;
+        updated.currentQuestion = curQuestion;
       })
     );
 

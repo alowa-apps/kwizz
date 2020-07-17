@@ -164,7 +164,6 @@ export default class QuestionApp extends React.Component {
       imageSlice = image.slice(0, 4);
     }
 
-    console.log(awsConfig.aws_user_files_s3_bucket);
     return (
       <div>
         <span className="question">{question.question}</span>

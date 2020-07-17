@@ -75,20 +75,13 @@ function AdminPage(props) {
     const quiz = await DataStore.query(Quiz, c => c.id("eq", adminGameCode));
     const quizdata = quiz[0];
 
-    console.log(quiz, quizdata);
-
     const totalQuestions = JSON.parse(quizdata.questionOrder);
 
     setTotalQuestions(totalQuestions.length);
 
-    console.log(quizdata);
-
-    console.log(totalQuestions);
-
     let currentIndex = 0;
 
     totalQuestions.map((object, index) => {
-      console.log(object, quizdata.currentQuestion);
       if (object === quizdata.currentQuestion) {
         currentIndex = index + 1;
         return;
@@ -106,7 +99,6 @@ function AdminPage(props) {
   async function getQuestion(setCurrentQuestion, id) {
     if (id !== "") {
       const question = await DataStore.query(Questions, c => c.id("eq", id));
-
       let rightAnswer = "";
       if (question[0].answerOne !== "" && question[0].answerOneCorrect) {
         rightAnswer = question[0].answerOne;
@@ -148,10 +140,6 @@ function AdminPage(props) {
 
   async function resetQuiz() {
     //deleteSubscribers
-    await DataStore.query(Subscribers, c => c.quizID("eq", adminGameCode));
-
-    await DataStore.query(Subscribers, c => c.quizID("eq", adminGameCode));
-
     await DataStore.delete(Subscribers, c => c.quizID("eq", adminGameCode));
 
     await DataStore.delete(Responses, c => c.quiz("eq", adminGameCode));
@@ -169,7 +157,6 @@ function AdminPage(props) {
   }
 
   useEffect(() => {
-    console.log(props);
     if (adminGameCode !== "") {
       localStorage.setItem("adminGameCode-editquiz", adminGameCode);
     }
@@ -297,7 +284,7 @@ function AdminPage(props) {
       const questionOrderArray = JSON.parse(questionOrder);
       if (questionOrderArray.length !== 0) {
         const original = await DataStore.query(Quiz, adminGameCode);
-
+        console.log(questionOrderArray);
         await DataStore.save(
           Quiz.copyOf(original, updated => {
             updated.started = true;
@@ -341,25 +328,100 @@ function AdminPage(props) {
     );
   }
 
-  function showImage(image) {
-    console.log(image);
-    let imageSlice = "";
-    if (image !== null && typeof image !== "undefined") {
-      imageSlice = image.slice(0, 4);
-    }
-
-    if (imageSlice !== "http") {
+  function showImage(question) {
+    if (question.imageFromS3 && currentQuestion.image !== "") {
       return (
         <S3Image
-          imgKey={image}
+          imgKey={question.image}
           theme={{
             photoImg: { maxWidth: "250px", maxHeight: "250px" }
           }}
         />
       );
+    } else {
+      return <Image src={question.image} className="imageQuestion" fluid />;
+    }
+  }
+
+  function showQuizControl() {
+    if (totalQuestions === 0) {
+      return (
+        <Card.Body>
+          <Card.Title>There are no questions yet!</Card.Title>
+        </Card.Body>
+      );
     }
 
-    return <Image src={image} className="imageQuestion" fluid />;
+    return (
+      <Card.Body>
+        <Card.Title>Kwizz control</Card.Title>
+
+        {!quiz.started && (
+          <Form.Group controlId="timer">
+            {error.length > 0 && (
+              <Alert size="sm" variant="danger">
+                {error}
+              </Alert>
+            )}
+
+            <Form.Label>Set seconds per question</Form.Label>
+            <Form.Control
+              size="sm"
+              type="text"
+              name="name"
+              value={time}
+              width="20px"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+        )}
+        <div className="controlButtons">
+          {!quiz.started ? (
+            <Button
+              onClick={() => {
+                startQuiz(quiz.questionOrder);
+              }}
+              variant="outline-success"
+              className="controlStart"
+            >
+              Start kwizz
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                handleModalShow();
+              }}
+              variant="outline-danger"
+              className="controlStart"
+            >
+              Stop quiz
+            </Button>
+          )}
+          {!quiz.started && (
+            <Button
+              onClick={() => {
+                handleResetModalShow();
+              }}
+              className="controlReset"
+              variant="outline-danger"
+            >
+              Reset
+            </Button>
+          )}
+          {seconds === 0 && quiz.started && quiz.view !== 3 && (
+            <Button
+              onClick={() => {
+                processNextQuestion(quiz.currentQuestion, quiz.questionOrder);
+              }}
+              className="controlNext"
+              variant="success"
+            >
+              Next question
+            </Button>
+          )}
+        </div>
+      </Card.Body>
+    );
   }
 
   return (
@@ -418,7 +480,7 @@ function AdminPage(props) {
                             currentQuestion.image !== "" ||
                             typeof currentQuestion.image !== "undefined") && (
                             <div className="imageQuestion">
-                              {showImage(currentQuestion.image)}
+                              {showImage(currentQuestion)}
                             </div>
                           )}
                         </Col>
@@ -450,77 +512,7 @@ function AdminPage(props) {
           <Row>
             <Col>
               <Card style={{ height: "100%", width: "100%" }}>
-                <Card.Body>
-                  <Card.Title>Kwizz control</Card.Title>
-
-                  {!quiz.started && (
-                    <Form.Group controlId="timer">
-                      {error.length > 0 && (
-                        <Alert size="sm" variant="danger">
-                          {error}
-                        </Alert>
-                      )}
-
-                      <Form.Label>Set seconds per question</Form.Label>
-                      <Form.Control
-                        size="sm"
-                        type="text"
-                        name="name"
-                        value={time}
-                        width="20px"
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                  )}
-                  <div className="controlButtons">
-                    {!quiz.started ? (
-                      <Button
-                        onClick={() => {
-                          startQuiz(quiz.questionOrder);
-                        }}
-                        variant="outline-success"
-                        className="controlStart"
-                      >
-                        Start kwizz
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          handleModalShow();
-                        }}
-                        variant="outline-danger"
-                        className="controlStart"
-                      >
-                        Stop quiz
-                      </Button>
-                    )}
-                    {!quiz.started && (
-                      <Button
-                        onClick={() => {
-                          handleResetModalShow();
-                        }}
-                        className="controlReset"
-                        variant="outline-danger"
-                      >
-                        Reset
-                      </Button>
-                    )}
-                    {seconds === 0 && quiz.started && quiz.view !== 3 && (
-                      <Button
-                        onClick={() => {
-                          processNextQuestion(
-                            quiz.currentQuestion,
-                            quiz.questionOrder
-                          );
-                        }}
-                        className="controlNext"
-                        variant="success"
-                      >
-                        Next question
-                      </Button>
-                    )}
-                  </div>
-                </Card.Body>
+                {showQuizControl()}
               </Card>
             </Col>
 
