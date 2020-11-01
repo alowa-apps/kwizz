@@ -14,7 +14,7 @@ function App(props) {
   const [isActive, setIsActive] = useState(true);
 
   async function listSubscribers() {
-    const subscribers = await DataStore.query(Subscribers, c =>
+    const subscribers = await DataStore.query(Subscribers, (c) =>
       c.quizID("eq", localStorage.getItem("gamecode"))
     );
 
@@ -22,19 +22,26 @@ function App(props) {
   }
 
   async function listQuiz() {
-    const quiz = await DataStore.query(Quiz, c =>
+    const quiz = await DataStore.query(Quiz, (c) =>
       c.id("eq", localStorage.getItem("gamecode"))
     );
 
     const quizdata = quiz[0];
-    if (quizdata.view === 0) {
-      setSeconds(quizdata.questionTime);
-      setIsActive(true);
+    console.log(quizdata);
+    if (
+      typeof quizdata === "undefined" ||
+      typeof quizdata.view === "undefined"
+    ) {
     } else {
-      setSeconds(0);
-      setIsActive(false);
+      if (quizdata.view === 0) {
+        setSeconds(quizdata.questionTime);
+        setIsActive(true);
+      } else {
+        setSeconds(0);
+        setIsActive(false);
+      }
+      setQuiz(quizdata);
     }
-    setQuiz(quizdata);
   }
 
   const StartGame = () => {
@@ -62,7 +69,7 @@ function App(props) {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        setSeconds(seconds => seconds - 1);
+        setSeconds((seconds) => seconds - 1);
       }, 1000);
     } else if (!isActive) {
       clearInterval(interval);

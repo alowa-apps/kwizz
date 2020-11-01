@@ -1,7 +1,11 @@
 import React from "react";
-import Amplify from "@aws-amplify/core";
+import Amplify, { graphqlOperation } from "@aws-amplify/core";
 import Auth from "@aws-amplify/auth";
-import { DataStore } from "@aws-amplify/datastore";
+import API from "@aws-amplify/api";
+import * as queries from "./graphql/queries";
+//import { DataStore } from "@aws-amplify/datastore";
+import { DataStore, syncExpression } from "@aws-amplify/datastore";
+
 import { Button, Card, Alert, Form } from "react-bootstrap";
 import Layout from "./components/layout";
 import awsConfig from "./aws-exports";
@@ -19,21 +23,21 @@ import ReactGA from "react-ga";
 ReactGA.initialize("UA-154890668-2", { testMode: true });
 ReactGA.pageview(window.location.pathname + window.location.search);
 Amplify.configure(awsConfig);
-DataStore.configure(awsConfig);
+
+//DataStore.configure(awsConfig);
 
 export default class IndexPage extends React.Component {
   state = {
     name: "",
     gamecode: "",
     error: "",
-    path: ""
+    path: "",
   };
 
   constructor() {
     super();
-    Auth.currentCredentials()
-      .then(d => console.log("data: ", d))
-      .catch(e => console.log("error: ", e));
+
+    // iam public user
 
     this.changePath = this.changePath.bind(this);
     this.signout = this.signout.bind(this);
@@ -42,7 +46,14 @@ export default class IndexPage extends React.Component {
 
   componentDidMount() {
     console.log("app started");
-    this.init = DataStore.start();
+    //this.init = DataStore.start();
+    const auth = async () => {
+      await Auth.currentCredentials()
+        .then((d) => console.log("data: ", d))
+        .catch((e) => console.log("error: ", e));
+    };
+
+    auth();
 
     if (localStorage.getItem("path") !== null) {
       this.changePath(localStorage.getItem("path"));
@@ -51,7 +62,7 @@ export default class IndexPage extends React.Component {
 
   signout() {
     DataStore.delete(Subscribers, localStorage.getItem("subscriber"));
-    DataStore.delete(Responses, c =>
+    DataStore.delete(Responses, (c) =>
       c.subscriber("eq", localStorage.getItem("subscriber"))
     );
 
@@ -59,20 +70,20 @@ export default class IndexPage extends React.Component {
       name: "",
       gamecode: "",
       error: "",
-      path: ""
+      path: "",
     });
     localStorage.setItem("path", "");
     localStorage.setItem("gamecode", "");
     localStorage.setItem("subscriber", "");
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -90,16 +101,38 @@ export default class IndexPage extends React.Component {
       this.setState({ error: "Fill in a 8 digits gamecode" });
     } else {
       // check the 8 digit code and and the extra - to preven doubles from the Dynamodb ID
-      const quiz = await DataStore.query(Quiz, c =>
-        c.id("beginsWith", this.state.gamecode + "-")
-      );
 
-      if (quiz.length === 0) {
+      // console.log(this.state.gamecode);
+      // const quiz = await API.graphql({
+      //   query: queries.listQuizs,
+      //   filter: { id: { contains: "9e5b9f376e7a" } },
+      // });
+
+      let filter = {
+        id: { beginsWith: this.state.gamecode },
+      };
+      const quiz = await API.graphql({
+        query: queries.listQuizs,
+        variables: { filter: filter },
+      });
+
+      if (quiz.data.listQuizs.items.length === 0) {
         this.setState({ error: "There is no game with this code" });
       } else {
-        localStorage.setItem("gamecode", quiz[0].id);
+        localStorage.setItem("gamecode", quiz.data.listQuizs.items[0].id);
         this.changePath("auth");
       }
+
+      // const quiz = await DataStore.query(Quiz, (c) =>
+      //   c.id("beginsWith", this.state.gamecode + "-")
+      // );
+
+      // if (quiz.length === 0) {
+      //   this.setState({ error: "There is no game with this code" });
+      // } else {
+      //   localStorage.setItem("gamecode", quiz[0].id);
+      //   this.changePath("auth");
+      // }
     }
   };
 
