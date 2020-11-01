@@ -24,8 +24,6 @@ ReactGA.initialize("UA-154890668-2", { testMode: true });
 ReactGA.pageview(window.location.pathname + window.location.search);
 Amplify.configure(awsConfig);
 
-//DataStore.configure(awsConfig);
-
 export default class IndexPage extends React.Component {
   state = {
     name: "",
@@ -102,12 +100,6 @@ export default class IndexPage extends React.Component {
     } else {
       // check the 8 digit code and and the extra - to preven doubles from the Dynamodb ID
 
-      // console.log(this.state.gamecode);
-      // const quiz = await API.graphql({
-      //   query: queries.listQuizs,
-      //   filter: { id: { contains: "9e5b9f376e7a" } },
-      // });
-
       let filter = {
         id: { beginsWith: this.state.gamecode },
       };
@@ -122,17 +114,6 @@ export default class IndexPage extends React.Component {
         localStorage.setItem("gamecode", quiz.data.listQuizs.items[0].id);
         this.changePath("auth");
       }
-
-      // const quiz = await DataStore.query(Quiz, (c) =>
-      //   c.id("beginsWith", this.state.gamecode + "-")
-      // );
-
-      // if (quiz.length === 0) {
-      //   this.setState({ error: "There is no game with this code" });
-      // } else {
-      //   localStorage.setItem("gamecode", quiz[0].id);
-      //   this.changePath("auth");
-      // }
     }
   };
 
