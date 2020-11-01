@@ -1,57 +1,57 @@
 {
-    "prod": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-quizit3-prod-214330-authRole",
-            "UnauthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-prod-214330-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-prod-214330-authRole",
-            "Region": "eu-west-1",
-            "DeploymentBucketName": "amplify-quizit3-prod-214330-deployment",
-            "UnauthRoleName": "amplify-quizit3-prod-214330-unauthRole",
-            "StackName": "amplify-quizit3-prod-214330",
-            "StackId": "arn:aws:cloudformation:eu-west-1:331566579748:stack/amplify-quizit3-prod-214330/11e206e0-7451-11ea-afef-0a0af0d573f8",
-            "AmplifyAppId": "d1qdenhzp003kw"
-        },
-        "categories": {
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d1qdenhzp003kw",
-                    "type": "manual"
-                }
-            },
-            "auth": {
-                "quizit3df1a9e52df1a9e52": {}
-            },
-            "function": {
-                "addData": {},
-                "S3Trigger739d230f": {}
-            }
-        }
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-quizit3-prod-214330-authRole",
+      "UnauthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-prod-214330-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-prod-214330-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-quizit3-prod-214330-deployment",
+      "UnauthRoleName": "amplify-quizit3-prod-214330-unauthRole",
+      "StackName": "amplify-quizit3-prod-214330",
+      "StackId": "arn:aws:cloudformation:eu-west-1:331566579748:stack/amplify-quizit3-prod-214330/11e206e0-7451-11ea-afef-0a0af0d573f8",
+      "AmplifyAppId": "d1qdenhzp003kw"
     },
-    "test": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-quizit3-test-163419-authRole",
-            "UnauthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-test-163419-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-test-163419-authRole",
-            "Region": "eu-west-1",
-            "DeploymentBucketName": "amplify-quizit3-test-163419-deployment",
-            "UnauthRoleName": "amplify-quizit3-test-163419-unauthRole",
-            "StackName": "amplify-quizit3-test-163419",
-            "StackId": "arn:aws:cloudformation:eu-west-1:331566579748:stack/amplify-quizit3-test-163419/af9aa6a0-8638-11ea-b924-0ac92d082ee0",
-            "AmplifyAppId": "d1qdenhzp003kw"
-        },
-        "categories": {
-            "auth": {
-                "quizit3df1a9e52df1a9e52": {}
-            },
-            "function": {
-                "addData": {}
-            },
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d1qdenhzp003kw",
-                    "type": "manual"
-                }
-            }
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1qdenhzp003kw",
+          "type": "manual"
         }
+      },
+      "auth": {
+        "quizit3df1a9e52df1a9e52": {}
+      },
+      "function": {
+        "addData": {},
+        "S3Trigger739d230f": {}
+      }
     }
+  },
+  "test": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-quizit3-test-163419-authRole",
+      "UnauthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-test-163419-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::331566579748:role/amplify-quizit3-test-163419-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-quizit3-test-163419-deployment",
+      "UnauthRoleName": "amplify-quizit3-test-163419-unauthRole",
+      "StackName": "amplify-quizit3-test-163419",
+      "StackId": "arn:aws:cloudformation:eu-west-1:331566579748:stack/amplify-quizit3-test-163419/af9aa6a0-8638-11ea-b924-0ac92d082ee0",
+      "AmplifyAppId": "d1qdenhzp003kw"
+    },
+    "categories": {
+      "auth": {
+        "quizit3df1a9e52df1a9e52": {}
+      },
+      "function": {
+        "addData": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1qdenhzp003kw",
+          "type": "manual"
+        }
+      }
+    }
+  }
 }

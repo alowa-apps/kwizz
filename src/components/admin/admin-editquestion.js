@@ -9,28 +9,31 @@ import Video from "../video";
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import Amplify from "@aws-amplify/core";
 import Storage from "@aws-amplify/storage";
-import { Auth } from "@aws-amplify/auth";
-import awsexports from "../../aws-exports";
-import Predictions, {
-  AmazonAIPredictionsProvider
-} from "@aws-amplify/predictions";
 import { S3Image } from "aws-amplify-react";
 import Select from "react-select";
-Auth.configure(awsexports);
-Amplify.addPluggable(new AmazonAIPredictionsProvider());
+import awsconfig from "../../aws-exports";
+import Predictions, {
+  AmazonAIPredictionsProvider,
+} from "@aws-amplify/predictions";
+
+Amplify.configure(awsconfig);
+
+Amplify.register(Predictions);
+
+Predictions.addPluggable(new AmazonAIPredictionsProvider());
 
 function AdminEditQuestionPage() {
   let history = useHistory();
   const {
     location: {
-      state: { status }
-    }
+      state: { status },
+    },
   } = useHistory();
 
   const {
     location: {
-      state: { questionId }
-    }
+      state: { questionId },
+    },
   } = useHistory();
 
   localStorage.setItem("editQuestionStatus", status);
@@ -53,14 +56,14 @@ function AdminEditQuestionPage() {
     category: null,
     public: null,
     order: 0,
-    quizID: ""
+    quizID: "",
   });
   const [error, setError] = useState([]);
 
   const [modalState, setModalState] = useState(false);
 
   async function listQuestion() {
-    const resultQuestion = await DataStore.query(Questions, c =>
+    const resultQuestion = await DataStore.query(Questions, (c) =>
       c.id("eq", localStorage.getItem("questionId"))
     );
     setQuestion(resultQuestion[0]);
@@ -186,7 +189,7 @@ function AdminEditQuestionPage() {
         language = data;
       }
 
-      const lang = await DataStore.query(Languages, c =>
+      const lang = await DataStore.query(Languages, (c) =>
         c.code("eq", language)
       );
 
@@ -194,7 +197,7 @@ function AdminEditQuestionPage() {
         await DataStore.save(
           new Languages({
             type: "lang",
-            code: language
+            code: language,
           })
         );
       }
@@ -215,13 +218,13 @@ function AdminEditQuestionPage() {
           answerThreeCorrect: question.answerThreeCorrect,
           answerFour: question.answerFour,
           answerFourCorrect: question.answerFourCorrect,
-          quizID: localStorage.getItem("adminGameCode-editquiz")
+          quizID: localStorage.getItem("adminGameCode-editquiz"),
         })
       );
 
       if (publicValue) {
         await uploadImage("publicLibrary/" + file.name, file)
-          .then(async result => {
+          .then(async (result) => {
             await DataStore.save(
               new QuestionsDB({
                 image: result.key,
@@ -239,11 +242,11 @@ function AdminEditQuestionPage() {
                 answerFour: question.answerFour,
                 answerFourCorrect: question.answerFourCorrect,
                 relatedQuestion: questionSaved.id,
-                language: language
+                language: language,
               })
             );
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       }
 
       const savedQuestionId = questionSaved.id;
@@ -251,7 +254,7 @@ function AdminEditQuestionPage() {
       order = JSON.parse(quiz.questionOrder);
       order.push(String(savedQuestionId));
       await DataStore.save(
-        Quiz.copyOf(quiz, updated => {
+        Quiz.copyOf(quiz, (updated) => {
           updated.questionOrder = JSON.stringify(order);
         })
       );
@@ -259,8 +262,8 @@ function AdminEditQuestionPage() {
       history.push({
         pathname: "/edit-quiz",
         state: {
-          quizID: localStorage.getItem("adminGameCode-editquiz")
-        }
+          quizID: localStorage.getItem("adminGameCode-editquiz"),
+        },
       });
     }
   }
@@ -271,7 +274,7 @@ function AdminEditQuestionPage() {
       fileInput = true;
     }
     if (fileInput) {
-      return new Promise(async function(res, rej) {
+      return new Promise(async function (res, rej) {
         await Resizer.imageFileResizer(
           file,
           800,
@@ -279,15 +282,15 @@ function AdminEditQuestionPage() {
           "JPEG",
           90,
           0,
-          async uri => {
+          async (uri) => {
             Storage.put(path, uri, {
-              contentType: file.type
+              contentType: file.type,
             })
-              .then(result => {
+              .then((result) => {
                 //return result;
                 res(result);
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           },
           "blob"
         );
@@ -299,15 +302,15 @@ function AdminEditQuestionPage() {
     const data = await Predictions.interpret({
       text: {
         source: {
-          text: text
+          text: text,
         },
-        type: "LANGUAGE"
-      }
+        type: "LANGUAGE",
+      },
     })
-      .then(result => {
+      .then((result) => {
         return result.textInterpretation.language;
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     return data;
   }
@@ -342,7 +345,7 @@ function AdminEditQuestionPage() {
 
       // Update current question in Quiz
       await DataStore.save(
-        Questions.copyOf(original, updated => {
+        Questions.copyOf(original, (updated) => {
           updated.image = questionImage;
           updated.youtube = youtube;
           updated.question = question.question;
@@ -359,7 +362,7 @@ function AdminEditQuestionPage() {
         })
       );
 
-      const questionDB = await DataStore.query(QuestionsDB, c =>
+      const questionDB = await DataStore.query(QuestionsDB, (c) =>
         c.relatedQuestion("eq", localStorage.getItem("questionId"))
       );
 
@@ -368,13 +371,13 @@ function AdminEditQuestionPage() {
       if (questionDB.length > 0) {
         if (questionDB.image !== image) {
           await uploadImage("publicLibrary/" + file.name, file)
-            .then(async result => {
+            .then(async (result) => {
               key = result.key;
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         }
         await DataStore.save(
-          QuestionsDB.copyOf(questionDB[0], updated => {
+          QuestionsDB.copyOf(questionDB[0], (updated) => {
             updated.image = key;
             updated.youtube = youtube;
             updated.question = question.question;
@@ -416,7 +419,7 @@ function AdminEditQuestionPage() {
             answerFour: question.answerFour,
             answerFourCorrect: question.answerFourCorrect,
             relatedQuestion: localStorage.getItem("questionId"),
-            language: language
+            language: language,
           })
         );
       }
@@ -424,8 +427,8 @@ function AdminEditQuestionPage() {
       history.push({
         pathname: "/edit-quiz",
         state: {
-          quizID: localStorage.getItem("adminGameCode-editquiz")
-        }
+          quizID: localStorage.getItem("adminGameCode-editquiz"),
+        },
       });
     }
   }
@@ -449,7 +452,7 @@ function AdminEditQuestionPage() {
       case "public":
         setQuestion({
           ...question,
-          public: !question.public
+          public: !question.public,
         });
         break;
       case "question":
@@ -486,7 +489,7 @@ function AdminEditQuestionPage() {
           answerOneCorrect: true,
           answerTwoCorrect: false,
           answerThreeCorrect: false,
-          answerFourCorrect: false
+          answerFourCorrect: false,
         });
         break;
       case "answer2":
@@ -495,7 +498,7 @@ function AdminEditQuestionPage() {
           answerOneCorrect: false,
           answerTwoCorrect: true,
           answerThreeCorrect: false,
-          answerFourCorrect: false
+          answerFourCorrect: false,
         });
         break;
       case "answer3":
@@ -504,7 +507,7 @@ function AdminEditQuestionPage() {
           answerOneCorrect: false,
           answerTwoCorrect: false,
           answerThreeCorrect: true,
-          answerFourCorrect: false
+          answerFourCorrect: false,
         });
         break;
       case "answer4":
@@ -513,7 +516,7 @@ function AdminEditQuestionPage() {
           answerOneCorrect: false,
           answerTwoCorrect: false,
           answerThreeCorrect: false,
-          answerFourCorrect: true
+          answerFourCorrect: true,
         });
         break;
       default:
@@ -533,7 +536,7 @@ function AdminEditQuestionPage() {
       { value: "sports", label: "sports" },
       { value: "tech", label: "tech" },
       { value: "topography", label: "topography" },
-      { value: "other", label: "other" }
+      { value: "other", label: "other" },
     ];
 
     return (
@@ -555,20 +558,20 @@ function AdminEditQuestionPage() {
     if (typeof original === "undefined") {
       // question not saved yet but photo already uploaded
       await Storage.remove(key)
-        .then(async result => {
+        .then(async (result) => {
           setImage("");
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else if (
       typeof original.fromLibrary === "undefined" ||
       !original.fromLibrary
     ) {
       await Storage.remove(key)
-        .then(async result => {
+        .then(async (result) => {
           if (typeof original !== "undefined") {
             // Update current question in Quiz
             await DataStore.save(
-              Questions.copyOf(original, updated => {
+              Questions.copyOf(original, (updated) => {
                 updated.image = "";
               })
             );
@@ -576,7 +579,7 @@ function AdminEditQuestionPage() {
 
           setImage("");
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else {
       // when question is from the library don't delete the image object, but just the ref in the DB
       original = await DataStore.query(
@@ -587,7 +590,7 @@ function AdminEditQuestionPage() {
       if (typeof original !== "undefined") {
         // Update current question in Quiz
         await DataStore.save(
-          Questions.copyOf(original, updated => {
+          Questions.copyOf(original, (updated) => {
             updated.image = "";
           })
         );
@@ -642,7 +645,7 @@ function AdminEditQuestionPage() {
                     <S3Image
                       imgKey={image}
                       theme={{
-                        photoImg: { maxHeight: "300px" }
+                        photoImg: { maxHeight: "300px" },
                       }}
                     />
                   ) : (
@@ -668,7 +671,7 @@ function AdminEditQuestionPage() {
           <Link
             to={{
               pathname: "/edit-quiz",
-              state: { quizID: localStorage.getItem("adminGameCode-editquiz") }
+              state: { quizID: localStorage.getItem("adminGameCode-editquiz") },
             }}
           >
             <Button className="backButton" variant="secondary">
@@ -886,7 +889,7 @@ function AdminEditQuestionPage() {
                                   <S3Image
                                     imgKey={image}
                                     theme={{
-                                      photoImg: { maxHeight: "300px" }
+                                      photoImg: { maxHeight: "300px" },
                                     }}
                                   />
                                   <Button

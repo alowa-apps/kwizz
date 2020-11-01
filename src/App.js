@@ -1,7 +1,11 @@
 import React from "react";
-import Amplify from "@aws-amplify/core";
+import Amplify, { graphqlOperation } from "@aws-amplify/core";
 import Auth from "@aws-amplify/auth";
-import { DataStore } from "@aws-amplify/datastore";
+import API from "@aws-amplify/api";
+import * as queries from "./graphql/queries";
+//import { DataStore } from "@aws-amplify/datastore";
+import { DataStore, syncExpression } from "@aws-amplify/datastore";
+import { Helmet } from "react-helmet";
 import { Button, Card, Alert, Form } from "react-bootstrap";
 import Layout from "./components/layout";
 import awsConfig from "./aws-exports";
@@ -16,24 +20,22 @@ import AdminEditQuestion from "./components/admin/admin-editquestion";
 import AdminLibrary from "./components/admin/question-library";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ReactGA from "react-ga";
-ReactGA.initialize("UA-154890668-2", { testMode: true });
+ReactGA.initialize("UA-154890668-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
 Amplify.configure(awsConfig);
-DataStore.configure(awsConfig);
 
 export default class IndexPage extends React.Component {
   state = {
     name: "",
     gamecode: "",
     error: "",
-    path: ""
+    path: "",
   };
 
   constructor() {
     super();
-    Auth.currentCredentials()
-      .then(d => console.log("data: ", d))
-      .catch(e => console.log("error: ", e));
+
+    // iam public user
 
     this.changePath = this.changePath.bind(this);
     this.signout = this.signout.bind(this);
@@ -42,7 +44,14 @@ export default class IndexPage extends React.Component {
 
   componentDidMount() {
     console.log("app started");
-    this.init = DataStore.start();
+    //this.init = DataStore.start();
+    const auth = async () => {
+      await Auth.currentCredentials()
+        .then((d) => console.log("data: ", d))
+        .catch((e) => console.log("error: ", e));
+    };
+
+    auth();
 
     if (localStorage.getItem("path") !== null) {
       this.changePath(localStorage.getItem("path"));
@@ -51,7 +60,7 @@ export default class IndexPage extends React.Component {
 
   signout() {
     DataStore.delete(Subscribers, localStorage.getItem("subscriber"));
-    DataStore.delete(Responses, c =>
+    DataStore.delete(Responses, (c) =>
       c.subscriber("eq", localStorage.getItem("subscriber"))
     );
 
@@ -59,20 +68,20 @@ export default class IndexPage extends React.Component {
       name: "",
       gamecode: "",
       error: "",
-      path: ""
+      path: "",
     });
     localStorage.setItem("path", "");
     localStorage.setItem("gamecode", "");
     localStorage.setItem("subscriber", "");
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -90,14 +99,19 @@ export default class IndexPage extends React.Component {
       this.setState({ error: "Fill in a 8 digits gamecode" });
     } else {
       // check the 8 digit code and and the extra - to preven doubles from the Dynamodb ID
-      const quiz = await DataStore.query(Quiz, c =>
-        c.id("beginsWith", this.state.gamecode + "-")
-      );
 
-      if (quiz.length === 0) {
+      let filter = {
+        id: { beginsWith: this.state.gamecode },
+      };
+      const quiz = await API.graphql({
+        query: queries.listQuizs,
+        variables: { filter: filter },
+      });
+
+      if (quiz.data.listQuizs.items.length === 0) {
         this.setState({ error: "There is no game with this code" });
       } else {
-        localStorage.setItem("gamecode", quiz[0].id);
+        localStorage.setItem("gamecode", quiz.data.listQuizs.items[0].id);
         this.changePath("auth");
       }
     }
@@ -123,6 +137,16 @@ export default class IndexPage extends React.Component {
 
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <meta
+            name="description"
+            content="Make an online quiz - the free alternative to Kahoot"
+          />
+          <title>
+            Become thé Kwizz Guru amongst colleagues, friends and family.
+          </title>
+        </Helmet>
         <Layout path={this.state.path}>
           <div className="buildQuiz">
             <Link to="/admin">
@@ -156,7 +180,7 @@ export default class IndexPage extends React.Component {
               </Form>
 
               <Button size="lg" onClick={this.handleSubmit}>
-                Start
+                Start Game
               </Button>
             </Card.Body>
           </Card>

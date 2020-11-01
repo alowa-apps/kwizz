@@ -30,6 +30,7 @@ type Questions @model @auth(rules: [{ allow: public, provider: iam }]) {
   fromLibrary: Boolean
   category: String
 }
+
 type QuestionsDB @model @auth(rules: [{ allow: public, provider: iam }]) {
   id: ID!
   image: String
@@ -64,6 +65,7 @@ type Responses @model @auth(rules: [{ allow: public, provider: iam }]) {
   subscriber: String!
   question: String!
 }
+
 type Languages
   @model
   @auth(rules: [{ allow: public, provider: iam }])
