@@ -5,7 +5,7 @@ import API from "@aws-amplify/api";
 import * as queries from "./graphql/queries";
 //import { DataStore } from "@aws-amplify/datastore";
 import { DataStore, syncExpression } from "@aws-amplify/datastore";
-
+import { Helmet } from "react-helmet";
 import { Button, Card, Alert, Form } from "react-bootstrap";
 import Layout from "./components/layout";
 import awsConfig from "./aws-exports";
@@ -20,7 +20,7 @@ import AdminEditQuestion from "./components/admin/admin-editquestion";
 import AdminLibrary from "./components/admin/question-library";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ReactGA from "react-ga";
-ReactGA.initialize("UA-154890668-2", { testMode: true });
+ReactGA.initialize("UA-154890668-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
 Amplify.configure(awsConfig);
 
@@ -137,6 +137,16 @@ export default class IndexPage extends React.Component {
 
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <meta
+            name="description"
+            content="Make an online quiz - the free alternative to Kahoot"
+          />
+          <title>
+            Become thé Kwizz Guru amongst colleagues, friends and family.
+          </title>
+        </Helmet>
         <Layout path={this.state.path}>
           <div className="buildQuiz">
             <Link to="/admin">
@@ -170,7 +180,7 @@ export default class IndexPage extends React.Component {
               </Form>
 
               <Button size="lg" onClick={this.handleSubmit}>
-                Start
+                Start Game
               </Button>
             </Card.Body>
           </Card>
