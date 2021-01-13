@@ -14,7 +14,7 @@ function App(props) {
   const [isActive, setIsActive] = useState(true);
 
   async function listSubscribers() {
-    const result = await DataStore.query(Subscribers, (c) =>
+    const result = await DataStore.query(Subscribers, c =>
       c.quizID("eq", localStorage.getItem("gamecode"))
     );
 
@@ -22,7 +22,7 @@ function App(props) {
   }
 
   async function listQuiz() {
-    const quiz = await DataStore.query(Quiz, (c) =>
+    const quiz = await DataStore.query(Quiz, c =>
       c.id("eq", localStorage.getItem("gamecode"))
     );
 
@@ -70,7 +70,7 @@ function App(props) {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        setSeconds((seconds) => seconds - 1);
+        setSeconds(seconds => seconds - 1);
       }, 1000);
     } else if (!isActive) {
       clearInterval(interval);
