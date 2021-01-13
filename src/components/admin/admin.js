@@ -8,13 +8,13 @@ import Amplify, { Hub } from "@aws-amplify/core";
 import Footer from "../footerAdmin";
 import awsconfig from "../../aws-exports";
 import Storage from "@aws-amplify/storage";
+import { Auth } from "@aws-amplify/auth";
 
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 
 Amplify.configure(awsconfig);
 DataStore.configure(awsconfig);
-
-const Auth = Amplify.Auth;
+Auth.configure(awsconfig);
 
 function AdminPage(props) {
   const [quiz, setQuiz] = useState([]);
@@ -39,29 +39,29 @@ function AdminPage(props) {
         seconds: 30,
         timestamp: 0,
         started: false,
-        questionOrder: "[]"
+        questionOrder: "[]",
       })
     );
   }
 
   async function onDelete() {
-    DataStore.delete(Quiz, c => c.id("eq", toBeDeletedId));
-    DataStore.delete(Subscribers, c => c.quizID("eq", toBeDeletedId));
-    DataStore.delete(Responses, c => c.quiz("eq", toBeDeletedId));
+    DataStore.delete(Quiz, (c) => c.id("eq", toBeDeletedId));
+    DataStore.delete(Subscribers, (c) => c.quizID("eq", toBeDeletedId));
+    DataStore.delete(Responses, (c) => c.quiz("eq", toBeDeletedId));
 
-    const deletedQuestions = await DataStore.query(Questions, c =>
+    const deletedQuestions = await DataStore.query(Questions, (c) =>
       c.quizID("eq", toBeDeletedId)
     );
 
     if (deletedQuestions.length > 0) {
-      deletedQuestions.map(item => {
+      deletedQuestions.map((item) => {
         if (item.image !== "" || typeof item.image !== "undefined") {
           Storage.remove(item.image); // remove from 3s bucket
         }
       });
     }
 
-    DataStore.delete(Questions, c => c.quizID("eq", toBeDeletedId));
+    DataStore.delete(Questions, (c) => c.quizID("eq", toBeDeletedId));
 
     listQuiz(setQuiz);
     handleDeleteModalClose();
@@ -70,18 +70,20 @@ function AdminPage(props) {
 
   async function listQuiz(setQuiz) {
     Auth.currentAuthenticatedUser()
-      .then(async data => {
+      .then(async (data) => {
         setUser(data.signInUserSession.idToken.payload.sub);
         const userID = data.signInUserSession.idToken.payload.sub;
 
-        const result = await DataStore.query(Quiz, c => c.owner("eq", userID));
+        const result = await DataStore.query(Quiz, (c) =>
+          c.owner("eq", userID)
+        );
         setQuiz(result);
       })
-      .catch(e => console.log("error: ", e));
+      .catch((e) => console.log("error: ", e));
   }
 
   useEffect(() => {
-    Hub.listen("auth", data => {
+    Hub.listen("auth", (data) => {
       const { payload } = data;
       if (payload.event === "signIn") {
         listQuiz(setQuiz);
@@ -124,7 +126,7 @@ function AdminPage(props) {
                         <Link
                           to={{
                             pathname: "/run-quiz",
-                            state: { quizID: quiz[i].id }
+                            state: { quizID: quiz[i].id },
                           }}
                         >
                           Run Kwizz
@@ -134,7 +136,7 @@ function AdminPage(props) {
                         <Link
                           to={{
                             pathname: "/edit-quiz",
-                            state: { quizID: quiz[i].id }
+                            state: { quizID: quiz[i].id },
                           }}
                         >
                           Edit Kwizz

@@ -14,7 +14,11 @@ function App(props) {
   const [isActive, setIsActive] = useState(true);
 
   async function listSubscribers() {
+<<<<<<< HEAD
     const result = await DataStore.query(Subscribers, c =>
+=======
+    const subscribers = await DataStore.query(Subscribers, (c) =>
+>>>>>>> 44630a268c43f8bec0a6c221bd795f4a06f7be8e
       c.quizID("eq", localStorage.getItem("gamecode"))
     );
 
@@ -22,6 +26,7 @@ function App(props) {
   }
 
   async function listQuiz() {
+<<<<<<< HEAD
     const result = await DataStore.query(Quiz, c =>
       c.id("eq", localStorage.getItem("gamecode"))
     );
@@ -30,11 +35,28 @@ function App(props) {
     if (quizdata.view === 0) {
       setSeconds(quizdata.questionTime);
       setIsActive(true);
+=======
+    const quiz = await DataStore.query(Quiz, (c) =>
+      c.id("eq", localStorage.getItem("gamecode"))
+    );
+
+    const quizdata = quiz[0];
+    console.log(quizdata);
+    if (
+      typeof quizdata === "undefined" ||
+      typeof quizdata.view === "undefined"
+    ) {
+>>>>>>> 44630a268c43f8bec0a6c221bd795f4a06f7be8e
     } else {
-      setSeconds(0);
-      setIsActive(false);
+      if (quizdata.view === 0) {
+        setSeconds(quizdata.questionTime);
+        setIsActive(true);
+      } else {
+        setSeconds(0);
+        setIsActive(false);
+      }
+      setQuiz(quizdata);
     }
-    setQuiz(quizdata);
   }
 
   const StartGame = () => {
@@ -63,7 +85,7 @@ function App(props) {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        setSeconds(seconds => seconds - 1);
+        setSeconds((seconds) => seconds - 1);
       }, 1000);
     } else if (!isActive) {
       clearInterval(interval);
