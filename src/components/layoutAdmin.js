@@ -41,7 +41,7 @@ const Layout = props => {
             </Col>
           </Row>
         </Container>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );
